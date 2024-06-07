@@ -1,0 +1,67 @@
+@mixin breakpoint( $point ) {
+	@if $point == tablet {
+		@media ( min-width: 600px ) {
+			@content ;
+		}
+	}
+	@if $point == pc {
+		@media ( min-width: 769px ) {
+			@content ;
+		}
+	}
+	@if $point == pcWide {
+		@media ( min-width: 1200px ) {
+			@content ;
+		}
+	}
+}
+
+
+.customer_form_field,
+.customer_data {
+	&__item {
+		display: grid;
+		gap: 8px;
+		margin-bottom: 24px;
+		@include breakpoint( tablet ) {
+			grid-template-columns: [label] 80px [input] 1fr;
+			gap: 16px;
+			margin-bottom: 32px;
+		}
+		@include breakpoint( pc ) {
+			grid-template-columns: [label] 150px [input] 1fr;
+		}
+		> label,
+		> span {
+			font-size: 16px;
+		}
+	}
+}
+.customer_form_field {
+	width: 100%;
+	@include breakpoint( tablet ) {
+		width: 80%;
+		margin-inline: auto;
+	}
+	&__item {
+		&__checkbox {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+			@include breakpoint( tablet ) {
+				grid-template-columns: 1fr 1fr 1fr;
+			}
+			@include breakpoint( pcWide ) {
+				// grid-template-columns: repeat( auto-fill, 1fr );
+				grid-template-columns: repeat( auto-fill, 100px );
+			}
+			> span {
+				display: flex;
+				align-items: center;
+				> label {
+					margin-top: -2.5px;
+				}
+			}
+		}
+	}
+}
