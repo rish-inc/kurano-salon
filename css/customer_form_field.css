@@ -24,6 +24,48 @@
 .customer_data__item > span {
   font-size: 16px;
 }
+.customer_form_field__item__multibox__list,
+.customer_data__item__multibox__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #bdbdbd;
+}
+@media (min-width: 600px) {
+  .customer_form_field__item__multibox__list,
+.customer_data__item__multibox__list {
+    grid-template-columns: repeat(auto-fill, 200px);
+  }
+}
+.customer_form_field__item__multibox__list .customer_menu_item:first-child,
+.customer_data__item__multibox__list .customer_menu_item:first-child {
+  width: 100%;
+  padding: 8px;
+  background-color: #eee;
+  font-weight: bold;
+  font-size: 14px;
+}
+.customer_form_field__item__multibox__list input[type=checkbox],
+.customer_form_field__item__multibox__list input[type=radio],
+.customer_data__item__multibox__list input[type=checkbox],
+.customer_data__item__multibox__list input[type=radio] {
+  width: 1rem;
+  height: 1rem;
+}
+.customer_form_field__item__multibox__list .widefat tfoot td input[type=checkbox]:before,
+.customer_form_field__item__multibox__list .widefat th input[type=checkbox]:before,
+.customer_form_field__item__multibox__list .widefat thead td input[type=checkbox]:before,
+.customer_form_field__item__multibox__list input[type=checkbox]:checked:before,
+.customer_data__item__multibox__list .widefat tfoot td input[type=checkbox]:before,
+.customer_data__item__multibox__list .widefat th input[type=checkbox]:before,
+.customer_data__item__multibox__list .widefat thead td input[type=checkbox]:before,
+.customer_data__item__multibox__list input[type=checkbox]:checked:before {
+  width: 1.3125rem;
+  height: 1.3125rem;
+}
 
 .customer_form_field {
   width: 100%;
@@ -34,26 +76,32 @@
     margin-inline: auto;
   }
 }
-.customer_form_field__item__checkbox {
+.customer_form_field__item__selector {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  margin-left: 16px;
 }
 @media (min-width: 600px) {
-  .customer_form_field__item__checkbox {
+  .customer_form_field__item__selector {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 @media (min-width: 1200px) {
-  .customer_form_field__item__checkbox {
+  .customer_form_field__item__selector {
     grid-template-columns: repeat(auto-fill, 100px);
   }
 }
-.customer_form_field__item__checkbox > span {
+.customer_form_field__item__selector > span {
   display: flex;
   align-items: center;
 }
-.customer_form_field__item__checkbox > span > label {
+.customer_form_field__item__selector > span > label {
   margin-top: -2.5px;
+}
+
+.js-menu-staff,
+.js-menu-designate {
+  display: none;
 }
 /*# sourceMappingURL=customer_form_field.css.map */

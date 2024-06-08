@@ -103,6 +103,7 @@ add_action( 'add_meta_boxes', 'sr_add_customer_fields' );
 function sr_insert_customer_fields() {
 	global $post;
 	wp_nonce_field( wp_create_nonce( __FILE__ ), 'sr_customer_nonce' );
+	$menu_terms = get_terms( 'treatment' , array( 'hide_empty' => false ) );
 	$users = get_users(
 		array (
 			'orderby' => 'ID',
@@ -120,44 +121,58 @@ function sr_insert_customer_fields() {
 			<input type="datetime-local" name="customer_visit_datetime" id="customer_visit_datetime" value="<?php echo get_post_meta( $post->ID, 'customer_visit_datetime', true ); ?>">
 		</div>
 		<div class="customer_form_field__item">
-			<span>担当スタッフ</span>
-			<div class="customer_form_field__item__checkbox">
-				<?php
-					$get_customer_staff = get_post_meta( $post -> ID, 'customer_staff', true );
-					$customer_staff = $get_customer_staff ? $get_customer_staff : array();
-				?>
-				<?php foreach( $users as $user ) :
-					if( in_array( $user -> display_name, $customer_staff ) ) {
-						$customer_staff_checked = "checked";
-					} else {
-						$customer_staff_checked = "";
-					}
+			<span>施術メニュー</span>
+			<ul id="customer_menu" class="customer_form_field__item__multibox">
+				<?php foreach( $menu_terms as $menu_term ) :
+					$menu_id   = $menu_term -> term_id;
+					$menu_slug = $menu_term -> slug;
 					?>
-					<span>
-						<label><input type="checkbox" name="customer_staff[]" value="<?php echo( $user -> display_name ); ?>" <?php echo $customer_staff_checked; ?>><?php echo( $user -> display_name ); ?></label>
-					</span>
+					<li class="customer_form_field__item__multibox__list">
+						<label class="customer_menu_item js-check-menu-title">
+							<?php
+								$get_customer_menu = get_post_meta( $post -> ID, 'customer_menu', true );
+								$customer_menu = $get_customer_menu ? $get_customer_menu : array();
+								if( in_array( $menu_term -> name, $customer_menu ) ) {
+									$customer_menu_checked = "checked";
+								} else {
+									$customer_menu_checked = "";
+								}
+							?>
+							<?php echo( $menu_term -> name ); ?> <input class="js-check-menu" type="checkbox" name="customer_menu[]" value="<?php echo( $menu_term -> name ); ?>" <?php echo $customer_menu_checked; ?>>
+						</label>
+						<select class="customer_form_field__item__selector js-menu-staff" name="customer_staff['<?php echo $menu_slug; ?>']">
+							<option value="担当者選択">担当者選択</option>
+							<?php
+								$get_customer_staff = get_post_meta( $post -> ID, 'customer_staff', true );
+								$customer_staff = $get_customer_staff ? $get_customer_staff : array();
+								foreach( $users as $user ) :
+									if( $user -> display_name == $customer_staff["'$menu_slug'"] ) {
+										$customer_staff_checked = "selected";
+									} else {
+										$customer_staff_checked = "";
+									}
+									?>
+									<option value="<?php echo( $user -> display_name ); ?>" <?php echo $customer_staff_checked; ?>><?php echo( $user -> display_name ); ?></option>
+								<?php endforeach;
+							?>
+						</select>
+						<div class="js-menu-designate">
+							<?php
+								$get_designate = get_post_meta( $post->ID, 'designate', true );
+								$designate = $get_designate ? $get_designate : array();
+								if ( isset( $designate["'$menu_slug'"] ) )  {
+									$designate_check = "checked";
+								} else {
+									$designate_check = "";
+								}
+							?>
+							<span>
+								<label>指名 <input class="js-check-designate" type="checkbox" name="designate['<?php echo $menu_slug; ?>']" <?php echo $designate_check; ?>></label>
+							</span>
+						</div>
+					<li>
 				<?php endforeach; ?>
-			</div>
-		</div>
-		<div class="customer_form_field__item">
-			<span>指名スタッフ</span>
-			<div class="customer_form_field__item__checkbox">
-				<?php
-					$get_customer_designate_staff = get_post_meta( $post -> ID, 'customer_designate_staff', true );
-					$customer_designate_staff = $get_customer_designate_staff ? $get_customer_designate_staff : array();
-				?>
-				<?php foreach( $users as $user ) :
-					if( in_array( $user -> display_name, $customer_designate_staff ) ) {
-						$customer_designate_staff_checked = "checked";
-					} else {
-						$customer_designate_staff_checked = "";
-					}
-					?>
-					<span>
-						<label><input type="checkbox" name="customer_designate_staff[]" value="<?php echo( $user -> display_name ); ?>" <?php echo $customer_designate_staff_checked; ?>><?php echo( $user -> display_name ); ?></label>
-					</span>
-				<?php endforeach; ?>
-			</div>
+			</ul>
 		</div>
 		<div class="customer_form_field__item">
 			<label for="customer_peyment">お支払い金額</label>
@@ -195,6 +210,7 @@ function sr_insert_customer_fields() {
 function sr_save_customer_fields( $post_id ) {
 	global $post;
 	$sr_nonce =  isset( $_POST['sr_customer_nonce'] ) ? $_POST['sr_customer_nonce'] : null;
+	$menu_terms = get_terms( 'treatment' , array( 'hide_empty' => false ) );
 
 	if ( ! wp_verify_nonce( $sr_nonce, wp_create_nonce( __FILE__ ) ) ) {
 		return $post_id;
@@ -210,61 +226,66 @@ function sr_save_customer_fields( $post_id ) {
 		delete_post_meta( $post_id, 'customer_ruby' );
 	}
 
-	if( ! empty( $_POST['customer_visit_datetime'] ) ) {
+	if ( ! empty( $_POST['customer_visit_datetime'] ) ) {
 		update_post_meta( $post_id, 'customer_visit_datetime', $_POST['customer_visit_datetime'] );
 	} else {
 		delete_post_meta( $post_id, 'customer_visit_datetime' );
 	}
 
-	if( ! empty( $_POST['customer_staff'] ) ) {
+	if ( ! empty( $_POST['customer_menu'] ) ) {
+		update_post_meta( $post_id, 'customer_menu', $_POST['customer_menu'] );
+	} else {
+		delete_post_meta( $post_id, 'customer_menu' );
+	}
+	if ( ! empty( $_POST['customer_staff'] ) ) {
 		update_post_meta( $post_id, 'customer_staff', $_POST['customer_staff'] );
 	} else {
 		delete_post_meta( $post_id, 'customer_staff' );
 	}
 
-	if( ! empty( $_POST['customer_designate_staff'] ) ) {
-		update_post_meta( $post_id, 'customer_designate_staff', $_POST['customer_designate_staff'] );
+	if ( ! empty( $_POST['designate'] ) ) {
+		update_post_meta( $post_id, 'designate', $_POST['designate'] );
 	} else {
-		delete_post_meta( $post_id, 'customer_designate_staff' );
+		delete_post_meta( $post_id, 'designate' );
 	}
 
-	if( ! empty( $_POST['customer_peyment'] ) ) {
+	if ( ! empty( $_POST['customer_peyment'] ) ) {
 		update_post_meta( $post_id, 'peyment', $_POST['customer_peyment'] );
 	} else {
 		delete_post_meta( $post_id, 'peyment' );
 	}
 
-	if( ! empty( $_POST['customer_treatment_datail'] ) ) {
+	if ( ! empty( $_POST['customer_treatment_datail'] ) ) {
 		update_post_meta( $post_id, 'treatment_datail', $_POST['customer_treatment_datail'] );
 	} else {
 		delete_post_meta( $post_id, 'treatment_datail' );
 	}
 
-	if( ! empty( $_POST['customer_postal_code'] ) ) {
+	if ( ! empty( $_POST['customer_postal_code'] ) ) {
 		update_post_meta( $post_id, 'postal_code', $_POST['customer_postal_code'] );
 	} else {
 		delete_post_meta( $post_id, 'postal_code' );
 	}
 
-	if( ! empty( $_POST['customer_address'] ) ) {
+	if ( ! empty( $_POST['customer_address'] ) ) {
 		update_post_meta( $post_id, 'address', $_POST['customer_address'] );
 	} else {
 		delete_post_meta( $post_id, 'address' );
 	}
 
-	if( ! empty( $_POST['customer_customer_tel'] ) ) {
+	if ( ! empty( $_POST['customer_customer_tel'] ) ) {
 		update_post_meta( $post_id, 'customer_tel', $_POST['customer_customer_tel'] );
 	} else {
 		delete_post_meta( $post_id, 'customer_tel' );
 	}
 
-	if( ! empty( $_POST['customer_email'] ) ) {
+	if ( ! empty( $_POST['customer_email'] ) ) {
 		update_post_meta( $post_id, 'customer_email', $_POST['customer_email'] );
 	} else {
 		delete_post_meta( $post_id, 'customer_email' );
 	}
 
-	if( ! empty( $_POST['customer_birth'] ) ) {
+	if ( ! empty( $_POST['customer_birth'] ) ) {
 		update_post_meta( $post_id, 'customer_birth', $_POST['customer_birth'] );
 	} else {
 		delete_post_meta( $post_id, 'customer_birth' );
@@ -272,6 +293,7 @@ function sr_save_customer_fields( $post_id ) {
 }
 add_action( 'save_post', 'sr_save_customer_fields' );
 function sr_customer_enqueue( $hook_suffix ) {
-	wp_enqueue_style( 'customer_form_field', get_template_directory_uri() . '/css/customer_form_field.css');
+	wp_enqueue_style( 'customer_form_field', get_template_directory_uri() . '/css/customer_form_field.css' );
+	wp_enqueue_script( 'check-color', get_template_directory_uri() . '/js/check-color.js', array(), '', true );
 }
 add_action( 'admin_enqueue_scripts', 'sr_customer_enqueue' );

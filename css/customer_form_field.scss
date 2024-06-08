@@ -35,6 +35,41 @@
 		> span {
 			font-size: 16px;
 		}
+		&__multibox {
+			&__list {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 16px;
+				padding-bottom: 32px;
+				margin-bottom: 32px;
+				border-bottom: 1px solid #bdbdbd;
+				@include breakpoint( tablet ) {
+					grid-template-columns: repeat( auto-fill, 200px );
+				}
+				.customer_menu_item:first-child {
+					width: 100%;
+					padding: 8px;
+					background-color: #eee;
+					font-weight: bold;
+					font-size: 14px;
+					@include breakpoint( tablet ) {
+					}
+				}
+				input[type=checkbox],
+				input[type=radio] {
+					width: 1rem;
+					height: 1rem;
+				}
+				.widefat tfoot td input[type=checkbox]:before,
+				.widefat th input[type=checkbox]:before,
+				.widefat thead td input[type=checkbox]:before,
+				input[type=checkbox]:checked:before {
+					width: 1.3125rem;
+					height: 1.3125rem;
+				}
+			}
+		}
 	}
 }
 .customer_form_field {
@@ -44,15 +79,15 @@
 		margin-inline: auto;
 	}
 	&__item {
-		&__checkbox {
+		&__selector {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			gap: 16px;
+			margin-left: 16px;
 			@include breakpoint( tablet ) {
 				grid-template-columns: 1fr 1fr 1fr;
 			}
 			@include breakpoint( pcWide ) {
-				// grid-template-columns: repeat( auto-fill, 1fr );
 				grid-template-columns: repeat( auto-fill, 100px );
 			}
 			> span {
@@ -64,4 +99,9 @@
 			}
 		}
 	}
+}
+
+.js-menu-staff,
+.js-menu-designate {
+	display: none;
 }
