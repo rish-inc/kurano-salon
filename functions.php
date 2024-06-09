@@ -21,6 +21,9 @@ function custom_theme_support() {
 }
 add_action( 'after_setup_theme', 'custom_theme_support' );
 
+/*
+ * Add Custom post type
+ */
 function sr_customer_post_type_register( ) {
 	register_post_type (
 		'customer_report',
@@ -75,6 +78,17 @@ function sr_customer_post_type_register( ) {
 			'show_in_rest' => true,
 		),
 	);
+	register_taxonomy (
+		'shop',
+		'customer_report',
+		array (
+			'label' => '店舗登録',
+			'hierarchical' => true,
+			'public' => true,
+			'show_in_rest' => true,
+		),
+	);
+
 	register_taxonomy (
 		'characteristics',
 		'customer_report',
@@ -292,8 +306,71 @@ function sr_save_customer_fields( $post_id ) {
 	}
 }
 add_action( 'save_post', 'sr_save_customer_fields' );
+
 function sr_customer_enqueue( $hook_suffix ) {
 	wp_enqueue_style( 'customer_form_field', get_template_directory_uri() . '/css/customer_form_field.css' );
 	wp_enqueue_script( 'check-color', get_template_directory_uri() . '/js/check-color.js', array(), '', true );
 }
 add_action( 'admin_enqueue_scripts', 'sr_customer_enqueue' );
+
+/*
+ * add Custom taxonomy new fields for shop
+ */
+function sr_add_customer_fields_shop( $shop ) {
+	wp_nonce_field( basename(__FILE__), 'sr_shop_term_nonce' );
+	?>
+	<div class="form-field form-required term-image-wrap">
+		<label for="sr_custom_postal_code">郵便番号</label>
+		<input type="number" name="sr_custom[postal_code]" id="sr_custom_postal_code" size="25" value="">
+	</div>
+	<div class="form-field form-required term-image-wrap">
+		<label for="sr_custom_address">住所</label>
+		<input type="text" name="sr_custom[address]" id="sr_custom_address" size="25" value="">
+	</div>
+	<div class="form-field form-required term-image-wrap">
+		<label for="sr_custom_tel">電話番号</label>
+		<input type="tel" name="sr_custom[tel]" id="sr_custom_tel" size="25" value="">
+	</div>
+	<?php
+}
+add_action( 'shop_add_form_fields', 'sr_add_customer_fields_shop' );
+
+function sr_edit_customer_fields_shop( $shop ) {
+	wp_nonce_field( basename(__FILE__), 'sr_shop_term_nonce' );
+	$value = get_term_meta_text( $shop -> term_id );
+	$t_id = $shop -> term_id;
+	$sr_custom = get_option( "cat_$t_id" );
+?>
+<tr class="form-field">
+	<th><label for="sr_custom_postal_code">郵便番号</label></th>
+	<td><input type="number" name="sr_custom[postal_code]" id="sr_custom_postal_code" size="25" value="<?php if( isset ( $sr_custom['sr_custom[postal_code]'])) echo esc_html($sr_custom['sr_custom[postal_code]']) ?>"></td>
+</tr>
+<tr class="form-field">
+	<th><label for="sr_custom_address">住所</label></th>
+	<td><input type="text" name="sr_custom[address]" id="sr_custom_address" size="25" value="<?php if(isset ( $sr_custom['address'])) echo esc_html($sr_custom['address']) ?>"></td>
+</tr>
+<tr class="form-field">
+	<th><label for="sr_custom_tel">電話番号</label></th>
+	<td><input type="tel" name="sr_custom[tel]" id="sr_custom_tel" size="25" value="<?php if(isset ( $sr_custom['tel'])) echo esc_html($sr_custom['tel']) ?>"></td>
+</tr>
+<?php }
+add_action ( 'shop_edit_form_fields', 'sr_edit_customer_fields_shop');
+
+
+function get_term_meta_text( $term_id ) {
+	$value = get_term_meta( $term_id, '__term_meta_text', true );
+	$value = sanitize_text_field( $value );
+	return $value;
+}
+
+// function sr_save_customer_fields_shop( $term_id ) {
+// 	if ( !isset( $_POST['sr_shop_term_nonce'] ) || ! wp_verify_nonce( $_POST['sr_shop_term_nonce'], basename( __FILE__ ) ) ) {
+// 		return;
+// 	}
+// 	if ( ! empty( $_POST['customer_staff'] ) ) {
+// 		update_post_meta( $term_id, 'customer_staff', $_POST['customer_staff'] );
+// 	} else {
+// 		delete_post_meta( $term_id, 'customer_staff' );
+// 	}
+
+// }
