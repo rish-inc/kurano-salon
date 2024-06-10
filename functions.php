@@ -118,6 +118,7 @@ function sr_insert_customer_fields() {
 	global $post;
 	wp_nonce_field( wp_create_nonce( __FILE__ ), 'sr_customer_nonce' );
 	$menu_terms = get_terms( 'treatment' , array( 'hide_empty' => false ) );
+	$shop_terms = get_terms( 'shop' , array( 'hide_empty' => false ) );
 	$users = get_users(
 		array (
 			'orderby' => 'ID',
@@ -133,6 +134,27 @@ function sr_insert_customer_fields() {
 		<div class="customer_form_field__item">
 			<label for="customer_visit_datetime">来店日時</label>
 			<input type="datetime-local" name="customer_visit_datetime" id="customer_visit_datetime" value="<?php echo get_post_meta( $post->ID, 'customer_visit_datetime', true ); ?>">
+		</div>
+		<div class="customer_form_field__item">
+			<label for="customer_visit_shop">来店ショップ</label>
+			<select class="customer_form_field__item__selector" name="customer_visit_shop">
+				<option value="ショップ選択">ショップ選択</option>
+				<?php
+					$get_customer_shop = get_post_meta( $post -> ID, 'shop', true );
+					$customer_shop = $get_customer_shop ? $get_customer_shop : array();
+					foreach( $shop_terms as $shop_term ) :
+						$shop_id   = $shop_term -> term_id;
+						$shop_slug = $shop_term -> slug;
+						if( $shop_term -> name == $customer_shop["'$shop_slug'"] ) {
+							$customer_shop_checked = "selected";
+						} else {
+							$customer_shop_checked = "";
+						}
+						?>
+						<option value="<?php echo( $shop_term -> name ); ?>" <?php echo $customer_shop_checked; ?>><?php echo( $shop_term -> name ); ?></option>
+					<?php endforeach;
+				?>
+			</select>
 		</div>
 		<div class="customer_form_field__item">
 			<span>施術メニュー</span>
@@ -154,7 +176,7 @@ function sr_insert_customer_fields() {
 							?>
 							<?php echo( $menu_term -> name ); ?> <input class="js-check-menu" type="checkbox" name="customer_menu[]" value="<?php echo( $menu_term -> name ); ?>" <?php echo $customer_menu_checked; ?>>
 						</label>
-						<select class="customer_form_field__item__selector js-menu-staff" name="customer_staff['<?php echo $menu_slug; ?>']">
+						<select class="customer_form_field__item__multibox__selector js-menu-staff" name="customer_staff['<?php echo $menu_slug; ?>']">
 							<option value="担当者選択">担当者選択</option>
 							<?php
 								$get_customer_staff = get_post_meta( $post -> ID, 'customer_staff', true );
@@ -321,15 +343,15 @@ function sr_add_customer_fields_shop( $shop ) {
 	?>
 	<div class="form-field form-required term-image-wrap">
 		<label for="sr_custom_postal_code">郵便番号</label>
-		<input type="number" name="sr_custom[postal_code]" id="sr_custom_postal_code" size="25" value="">
+		<input type="number" name="sr_custom_shop_postal_code" id="sr_custom_postal_code" size="25" value="">
 	</div>
 	<div class="form-field form-required term-image-wrap">
 		<label for="sr_custom_address">住所</label>
-		<input type="text" name="sr_custom[address]" id="sr_custom_address" size="25" value="">
+		<input type="text" name="sr_custom_shop_address" id="sr_custom_address" size="25" value="">
 	</div>
 	<div class="form-field form-required term-image-wrap">
 		<label for="sr_custom_tel">電話番号</label>
-		<input type="tel" name="sr_custom[tel]" id="sr_custom_tel" size="25" value="">
+		<input type="tel" name="sr_custom_shop_tel" id="sr_custom_tel" size="25" value="">
 	</div>
 	<?php
 }
@@ -337,40 +359,53 @@ add_action( 'shop_add_form_fields', 'sr_add_customer_fields_shop' );
 
 function sr_edit_customer_fields_shop( $shop ) {
 	wp_nonce_field( basename(__FILE__), 'sr_shop_term_nonce' );
-	$value = get_term_meta_text( $shop -> term_id );
 	$t_id = $shop -> term_id;
-	$sr_custom = get_option( "cat_$t_id" );
+	$sr_custom = get_option( "cat_{$t_id}" );
 ?>
 <tr class="form-field">
-	<th><label for="sr_custom_postal_code">郵便番号</label></th>
-	<td><input type="number" name="sr_custom[postal_code]" id="sr_custom_postal_code" size="25" value="<?php if( isset ( $sr_custom['sr_custom[postal_code]'])) echo esc_html($sr_custom['sr_custom[postal_code]']) ?>"></td>
+	<th><label for="sr_custom_postal_code">郵便番号（ハイフン不要）</label></th>
+	<td><input type="number" name="sr_custom_shop_postal_code" id="sr_custom_postal_code" size="25"
+		value="<?php if ( get_term_meta( $t_id, 'sr_custom_shop_postal_code', true ) ) echo esc_html( get_term_meta( $t_id, 'sr_custom_shop_postal_code', true ) ) ?>">
+	</td>
 </tr>
 <tr class="form-field">
 	<th><label for="sr_custom_address">住所</label></th>
-	<td><input type="text" name="sr_custom[address]" id="sr_custom_address" size="25" value="<?php if(isset ( $sr_custom['address'])) echo esc_html($sr_custom['address']) ?>"></td>
+	<td><input type="text" name="sr_custom_shop_address" id="sr_custom_address" size="25"
+		value="<?php if ( get_term_meta( $t_id, 'sr_custom_shop_address', true ) ) echo esc_html( get_term_meta( $t_id, 'sr_custom_shop_address', true ) ) ?>">
+	</td>
 </tr>
 <tr class="form-field">
-	<th><label for="sr_custom_tel">電話番号</label></th>
-	<td><input type="tel" name="sr_custom[tel]" id="sr_custom_tel" size="25" value="<?php if(isset ( $sr_custom['tel'])) echo esc_html($sr_custom['tel']) ?>"></td>
+	<th><label for="sr_custom_tel">電話番号（ハイフン不要）</label></th>
+	<td><input type="tel" name="sr_custom_shop_tel" id="sr_custom_tel" size="25"
+	value="<?php if ( get_term_meta( $t_id, 'sr_custom_shop_tel', true ) ) echo esc_html( get_term_meta( $t_id, 'sr_custom_shop_tel', true ) ) ?>"></td>
 </tr>
 <?php }
 add_action ( 'shop_edit_form_fields', 'sr_edit_customer_fields_shop');
 
 
-function get_term_meta_text( $term_id ) {
-	$value = get_term_meta( $term_id, '__term_meta_text', true );
-	$value = sanitize_text_field( $value );
-	return $value;
+function sr_save_customer_fields_shop( $term_id ) {
+	if ( ! isset( $_POST['sr_shop_term_nonce'] ) || ! wp_verify_nonce( $_POST['sr_shop_term_nonce'], basename( __FILE__ ) ) ) {
+		return;
+	}
+
+	if ( isset( $_POST[ 'sr_custom_shop_postal_code' ] ) && esc_html( $_POST[ 'sr_custom_shop_postal_code' ] ) ) {
+		update_term_meta( $term_id, 'sr_custom_shop_postal_code', $_POST[ 'sr_custom_shop_postal_code' ] );
+	} else {
+		delete_term_meta( $term_id, 'sr_custom_shop_postal_code' );
+	}
+
+	if ( isset( $_POST['sr_custom_shop_address'] ) && esc_html( $_POST[ 'sr_custom_shop_address' ] ) ) {
+		update_term_meta( $term_id, 'sr_custom_shop_address', $_POST[ 'sr_custom_shop_address' ] );
+	} else {
+		delete_term_meta( $term_id, 'sr_custom_shop_address' );
+	}
+
+	if ( isset( $_POST[ 'sr_custom_shop_tel' ] ) && esc_html( $_POST[ 'sr_custom_shop_tel' ] ) ) {
+		update_term_meta( $term_id, 'sr_custom_shop_tel', str_replace( "-", "", $_POST[ 'sr_custom_shop_tel' ] ) );
+	} else {
+		delete_term_meta( $term_id, 'sr_custom_shop_tel' );
+	}
+
 }
-
-// function sr_save_customer_fields_shop( $term_id ) {
-// 	if ( !isset( $_POST['sr_shop_term_nonce'] ) || ! wp_verify_nonce( $_POST['sr_shop_term_nonce'], basename( __FILE__ ) ) ) {
-// 		return;
-// 	}
-// 	if ( ! empty( $_POST['customer_staff'] ) ) {
-// 		update_post_meta( $term_id, 'customer_staff', $_POST['customer_staff'] );
-// 	} else {
-// 		delete_post_meta( $term_id, 'customer_staff' );
-// 	}
-
-// }
+add_action ( 'create_shop', 'sr_save_customer_fields_shop');
+add_action ( 'edited_shop',   'sr_save_customer_fields_shop');

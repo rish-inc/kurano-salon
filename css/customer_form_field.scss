@@ -47,6 +47,39 @@
 				@include breakpoint( tablet ) {
 					grid-template-columns: repeat( auto-fill, 200px );
 				}
+				.customer_menu_item {
+					display: inline-grid;
+					grid-template-columns: 1fr auto 1fr;
+					column-gap: 1em;
+					align-items: center;
+					position: relative;
+					&::before,
+					&::after {
+						content: "";
+						background-color: #44a48a;
+						background-color: #858585;
+						justify-self: end;
+						position: absolute;
+					}
+					&::before {
+						width: 18px;
+						height: 3px;
+						right: 8px;
+					}
+					&::after {
+						width: 3px;
+						height: 18px;
+						right: 15px;
+					}
+					&.is-open {
+						&::after {
+							display: none;
+						}
+					}
+					> input {
+						display: none;
+					}
+				}
 				.customer_menu_item:first-child {
 					width: 100%;
 					padding: 8px;
@@ -79,22 +112,24 @@
 		margin-inline: auto;
 	}
 	&__item {
-		&__selector {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 16px;
-			margin-left: 16px;
-			@include breakpoint( tablet ) {
-				grid-template-columns: 1fr 1fr 1fr;
-			}
-			@include breakpoint( pcWide ) {
-				grid-template-columns: repeat( auto-fill, 100px );
-			}
-			> span {
-				display: flex;
-				align-items: center;
-				> label {
-					margin-top: -2.5px;
+		&__multibox {
+			&__selector {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 16px;
+				margin-left: 16px;
+				@include breakpoint( tablet ) {
+					grid-template-columns: 1fr 1fr 1fr;
+				}
+				@include breakpoint( pcWide ) {
+					grid-template-columns: repeat( auto-fill, 100px );
+				}
+				> span {
+					display: flex;
+					align-items: center;
+					> label {
+						margin-top: -2.5px;
+					}
 				}
 			}
 		}

@@ -40,6 +40,44 @@
     grid-template-columns: repeat(auto-fill, 200px);
   }
 }
+.customer_form_field__item__multibox__list .customer_menu_item,
+.customer_data__item__multibox__list .customer_menu_item {
+  display: inline-grid;
+  grid-template-columns: 1fr auto 1fr;
+  -moz-column-gap: 1em;
+       column-gap: 1em;
+  align-items: center;
+  position: relative;
+}
+.customer_form_field__item__multibox__list .customer_menu_item::before, .customer_form_field__item__multibox__list .customer_menu_item::after,
+.customer_data__item__multibox__list .customer_menu_item::before,
+.customer_data__item__multibox__list .customer_menu_item::after {
+  content: "";
+  background-color: #44a48a;
+  background-color: #858585;
+  justify-self: end;
+  position: absolute;
+}
+.customer_form_field__item__multibox__list .customer_menu_item::before,
+.customer_data__item__multibox__list .customer_menu_item::before {
+  width: 18px;
+  height: 3px;
+  right: 8px;
+}
+.customer_form_field__item__multibox__list .customer_menu_item::after,
+.customer_data__item__multibox__list .customer_menu_item::after {
+  width: 3px;
+  height: 18px;
+  right: 15px;
+}
+.customer_form_field__item__multibox__list .customer_menu_item.is-open::after,
+.customer_data__item__multibox__list .customer_menu_item.is-open::after {
+  display: none;
+}
+.customer_form_field__item__multibox__list .customer_menu_item > input,
+.customer_data__item__multibox__list .customer_menu_item > input {
+  display: none;
+}
 .customer_form_field__item__multibox__list .customer_menu_item:first-child,
 .customer_data__item__multibox__list .customer_menu_item:first-child {
   width: 100%;
@@ -76,27 +114,27 @@
     margin-inline: auto;
   }
 }
-.customer_form_field__item__selector {
+.customer_form_field__item__multibox__selector {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   margin-left: 16px;
 }
 @media (min-width: 600px) {
-  .customer_form_field__item__selector {
+  .customer_form_field__item__multibox__selector {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 @media (min-width: 1200px) {
-  .customer_form_field__item__selector {
+  .customer_form_field__item__multibox__selector {
     grid-template-columns: repeat(auto-fill, 100px);
   }
 }
-.customer_form_field__item__selector > span {
+.customer_form_field__item__multibox__selector > span {
   display: flex;
   align-items: center;
 }
-.customer_form_field__item__selector > span > label {
+.customer_form_field__item__multibox__selector > span > label {
   margin-top: -2.5px;
 }
 

@@ -11,16 +11,19 @@ for( let i = 0; i < checkMenu.length; i++ ) {
 		menuStaff[ i ].style.display = "block";
 		menuDesignate[ i ].style.display = "block";
 		fillboxTitle[ i ].style.backgroundColor = "#93F5D7";
+		fillboxTitle[ i ].classList.add( 'is-open' );
 	}
 	checkMenu[i].addEventListener( 'change', function() {
 		if ( checkMenu[ i ].checked ) {
 			menuStaff[ i ].style.display = "block";
 			menuDesignate[ i ].style.display = "block";
 			fillboxTitle[ i ].style.backgroundColor = "#93F5D7";
+			fillboxTitle[ i ].classList.add( 'is-open' );
 		} else {
 			menuStaff[ i ].style.display = "none";
 			menuDesignate[ i ].style.display = "none";
 			fillboxTitle[ i ].style.backgroundColor = "#eee";
+			fillboxTitle[ i ].classList.remove( 'is-open' );
 			for( const option of menuStaff[i].options ) {
 				option.selected = false;
 				checkDesignate[ i ].checked = false;
