@@ -31,9 +31,17 @@
 		@include breakpoint( pc ) {
 			grid-template-columns: [label] 150px [input] 1fr;
 		}
+
 		> label,
-		> span {
+		> span,
+		&__label,
+		&__value {
 			font-size: 16px;
+		}
+		&__value {
+			display: flex;
+			align-items: center;
+			gap: 16px;
 		}
 		&__multibox {
 			&__list {

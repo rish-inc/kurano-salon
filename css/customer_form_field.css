@@ -19,10 +19,18 @@
   }
 }
 .customer_form_field__item > label,
-.customer_form_field__item > span,
+.customer_form_field__item > span, .customer_form_field__item__label, .customer_form_field__item__value,
 .customer_data__item > label,
-.customer_data__item > span {
+.customer_data__item > span,
+.customer_data__item__label,
+.customer_data__item__value {
   font-size: 16px;
+}
+.customer_form_field__item__value,
+.customer_data__item__value {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 .customer_form_field__item__multibox__list,
 .customer_data__item__multibox__list {
