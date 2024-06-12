@@ -40,7 +40,7 @@ function sr_customer_post_type_register( ) {
 		'staff',
 		'customer_report',
 		array (
-			'label' => 'スタッフ',
+			'label' => 'スタッフ管理',
 			'hierarchical' => true,
 			'public' => true,
 			'show_in_rest' => true
@@ -50,7 +50,7 @@ function sr_customer_post_type_register( ) {
 		'treatment',
 		'customer_report',
 		array (
-			'label' => '施術メニューラベル',
+			'label' => '施術メニュー管理',
 			'hierarchical' => true,
 			'public' => true,
 			'show_in_rest' => true,
@@ -60,7 +60,7 @@ function sr_customer_post_type_register( ) {
 		'shop',
 		'customer_report',
 		array (
-			'label' => '店舗登録',
+			'label' => '店舗登録管理',
 			'hierarchical' => true,
 			'public' => true,
 			'show_in_rest' => true,
@@ -68,10 +68,10 @@ function sr_customer_post_type_register( ) {
 	);
 
 	register_taxonomy (
-		'characteristics',
+		'store-proucts',
 		'customer_report',
 		array (
-			'label' => '特徴ラベル',
+			'label' => '店頭販売商品管理',
 			'hierarchical' => false,
 			'public' => true,
 			'show_in_rest' => true,

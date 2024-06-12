@@ -7,6 +7,8 @@
 @include_once( 'view/main-insert-customer-fields.php' );
 @include_once( 'view/shop-add-term-fields.php' );
 @include_once( 'view/shop-edit-term-fields.php' );
+@include_once( 'view/store-products-add-term-fields.php' );
+@include_once( 'view/store-products-edit-term-fields.php' );
 @include_once( 'view/read-assets.php' );
 @include_once( 'model/main-save-customer-fields.php' );
 @include_once( 'model/shop-save-term-fields.php' );
