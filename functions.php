@@ -22,3 +22,4 @@ function custom_theme_support() {
 add_action( 'after_setup_theme', 'custom_theme_support' );
 
 @include_once( __DIR__ . '/salon-report/salon-report.php');
+@include_once( __DIR__ . '/salon-report-default-shop/select-default-shop.php');
