@@ -6,6 +6,8 @@ const checkDesignate = document.getElementsByClassName( 'js-check-designate' );
 
 const menuDesignate = document.getElementsByClassName( 'js-menu-designate' );
 
+const selectShop = document.getElementById( 'js-select-shop' );
+
 for( let i = 0; i < checkMenu.length; i++ ) {
 	if ( checkMenu[ i ].checked ) {
 		menuStaff[ i ].style.display = "block";
@@ -45,3 +47,7 @@ for( let i = 0; i < checkDesignate.length; i++ ) {
 		}
 	} );
 }
+
+window.addEventListener( 'load', () => {
+	selectShop.selected = true;
+} );

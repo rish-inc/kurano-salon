@@ -2,18 +2,19 @@
 /*
  * Inesrt custom fields for shop taxonomy.
  */
+@include_once( get_theme_file_path( '/salon-report/contoroller/gender.php' ) );
+@include_once( get_theme_file_path( '/salon-report/contoroller/shoplist.php' ) );
+
 function sr_insert_customer_fields() {
 	global $post;
 	wp_nonce_field( 'sr_insert_customer_fields', 'sr_customer_nonce' );
 	$menu_terms = get_terms( 'treatment' , array( 'hide_empty' => false ) );
-	$shop_terms = get_terms( 'shop' , array( 'hide_empty' => false ) );
 	$users = get_users(
 		array (
 			'orderby' => 'ID',
 			'order' => 'ASC',
 		)
 	);
-	$gender_datas =  [ "man" => "男性", "woman" => "女性" ];
 	?>
 	<div class="customer_form_field">
 		<div class="customer_form_field__item">
@@ -30,42 +31,17 @@ function sr_insert_customer_fields() {
 		</div>
 		<div class="customer_form_field__item">
 			<?php
-				$get_gender = get_post_meta( $post->ID, 'customer_gender', true );
-				$genders = $get_gender ? $get_gender : array();
 			?>
 			<p class="customer_form_field__item__label">性別</p>
 			<fieldset class="customer_form_field__item__fieldset">
-				<?php
-					foreach ( $gender_datas as $gender_data_key => $gender_data_value ) :
-						if ( in_array( $gender_data_value, $genders ) ) {
-							$gender_check = "checked";
-						} else {
-							$gender_check = "";
-						}
-				?>
-				<label class="customer_form_field__item__label"><?php echo $gender_data_value; ?> <input type="radio" name="customer_gender[]" id="<?php echo $gender_data_key; ?>" value="<?php echo $gender_data_value; ?>" <?php echo $gender_check; ?>></label>
-				<?php endforeach; ?>
+				<?php get_gender_field( $post ); ?>
 			</fieldset>
 		</div>
 		<div class="customer_form_field__item">
 			<label class="customer_form_field__item__label" for="customer_visit_shop">来店ショップ</label>
 			<select class="customer_form_field__item__selector" name="customer_visit_shop">
 				<option value="ショップ選択">ショップ選択</option>
-				<?php
-					$get_customer_shop = get_post_meta( $post -> ID, 'customer_visit_shop', true );
-					$customer_shop = $get_customer_shop ? $get_customer_shop : array();
-					foreach( $shop_terms as $shop_term ) :
-						$shop_id   = $shop_term -> term_id;
-						$shop_slug = $shop_term -> slug;
-						if( $shop_term -> name 	== $customer_shop ) {
-							$customer_shop_checked = "selected";
-						} else {
-							$customer_shop_checked = "";
-						}
-						?>
-						<option value="<?php echo( $shop_term -> name ); ?>" <?php echo $customer_shop_checked; ?>><?php echo( $shop_term -> name ); ?></option>
-					<?php endforeach;
-				?>
+				<?php get_shoplist_field( $post ); ?>
 			</select>
 		</div>
 		<div class="customer_form_field__item">
