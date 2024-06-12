@@ -3,7 +3,7 @@
  * save custom fields for term of shop taxonomy
  */
 function sr_save_customer_fields_shop( $term_id ) {
-	if ( ! isset( $_POST[ 'sr_shop_term_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'sr_shop_term_nonce' ], basename( __FILE__ ) ) ) {
+	if ( ! isset( $_POST[ 'sr_shop_term_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'sr_shop_term_nonce' ], 'term_fields_shop' ) ) {
 		return;
 	}
 
@@ -27,4 +27,4 @@ function sr_save_customer_fields_shop( $term_id ) {
 
 }
 add_action ( 'create_shop', 'sr_save_customer_fields_shop');
-add_action ( 'edited_shop',   'sr_save_customer_fields_shop');
+add_action ( 'edited_shop', 'sr_save_customer_fields_shop');
