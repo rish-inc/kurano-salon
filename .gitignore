@@ -1,0 +1,8 @@
+css/
+.htaccess
+node_modules/
+package-lock.json
+.DS_Store
+Thumbs.db
+dist/
+.vscode

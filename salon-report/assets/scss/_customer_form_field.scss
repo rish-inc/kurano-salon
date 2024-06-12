@@ -1,0 +1,42 @@
+@use 'global' as g;
+
+.customer_form_field,
+.personal_data {
+	&__item {
+		display: grid;
+		gap: 8px;
+		margin-bottom: 24px;
+		@include g.breakpoint( tablet ) {
+			grid-template-columns: [label] 80px [input] 1fr;
+			gap: 16px;
+			margin-bottom: 32px;
+		}
+		@include g.breakpoint( pc ) {
+			grid-template-columns: [label] 150px [input] 1fr;
+		}
+		> label,
+		> span,
+		&__label,
+		&__value,
+		&__fieldset {
+			font-size: 16px;
+		}
+		&__value,
+		&__fieldset {
+			display: flex;
+			align-items: center;
+		}
+		&__fieldset {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+		}
+	}
+}
+.customer_form_field {
+	width: 100%;
+	@include g.breakpoint( tablet ) {
+		width: 80%;
+		margin-inline: auto;
+	}
+}

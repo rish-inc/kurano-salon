@@ -10,7 +10,6 @@ function sr_save_customer_fields( $post_id ) {
 		return $post_id;
 	}
 
-
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return $post_id; }
 
 	if( ! current_user_can( 'edit_post', $post->ID ) ) { return $post_id; }

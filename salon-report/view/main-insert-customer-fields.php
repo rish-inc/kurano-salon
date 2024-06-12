@@ -21,11 +21,11 @@ function sr_insert_customer_fields() {
 			<p class="customer_form_field__item__value"><?php echo $post -> ID; ?></p>
 		</div>
 		<div class="customer_form_field__item">
-			<label for="customer_ruby">フリガナ</label>
+			<label class="customer_form_field__item__label" for="customer_ruby">フリガナ</label>
 			<input type="text" name="customer_ruby" id="customer_ruby" value="<?php echo get_post_meta( $post->ID, 'customer_ruby', true ); ?>">
 		</div>
 		<div class="customer_form_field__item">
-			<label for="customer_visit_datetime">来店日時</label>
+			<label class="customer_form_field__item__label" for="customer_visit_datetime">来店日時</label>
 			<input type="datetime-local" name="customer_visit_datetime" id="customer_visit_datetime" value="<?php echo get_post_meta( $post->ID, 'customer_visit_datetime', true ); ?>">
 		</div>
 		<div class="customer_form_field__item">
@@ -34,7 +34,7 @@ function sr_insert_customer_fields() {
 				$genders = $get_gender ? $get_gender : array();
 			?>
 			<p class="customer_form_field__item__label">性別</p>
-			<fieldset class="customer_form_field__item__value">
+			<fieldset class="customer_form_field__item__fieldset">
 				<?php
 					foreach ( $gender_datas as $gender_data_key => $gender_data_value ) :
 						if ( in_array( $gender_data_value, $genders ) ) {
@@ -43,12 +43,12 @@ function sr_insert_customer_fields() {
 							$gender_check = "";
 						}
 				?>
-				<label><?php echo $gender_data_value; ?> <input type="radio" name="customer_gender[]" id="<?php echo $gender_data_key; ?>" value="<?php echo $gender_data_value; ?>" <?php echo $gender_check; ?>></label>
+				<label class="customer_form_field__item__label"><?php echo $gender_data_value; ?> <input type="radio" name="customer_gender[]" id="<?php echo $gender_data_key; ?>" value="<?php echo $gender_data_value; ?>" <?php echo $gender_check; ?>></label>
 				<?php endforeach; ?>
 			</fieldset>
 		</div>
 		<div class="customer_form_field__item">
-			<label for="customer_visit_shop">来店ショップ</label>
+			<label class="customer_form_field__item__label" for="customer_visit_shop">来店ショップ</label>
 			<select class="customer_form_field__item__selector" name="customer_visit_shop">
 				<option value="ショップ選択">ショップ選択</option>
 				<?php
@@ -69,14 +69,14 @@ function sr_insert_customer_fields() {
 			</select>
 		</div>
 		<div class="customer_form_field__item">
-			<span>施術メニュー</span>
-			<ul id="customer_menu" class="customer_form_field__item__multibox">
+			<p class="customer_form_field__item__label">施術メニュー</p>
+			<ul id="customer_menu" class="customer_form_field__multibox">
 				<?php foreach( $menu_terms as $menu_term ) :
 					$menu_id   = $menu_term -> term_id;
 					$menu_slug = $menu_term -> slug;
 					?>
-					<li class="customer_form_field__item__multibox__list">
-						<label class="customer_menu_item js-check-menu-title">
+					<li class="customer_form_field__multibox__item">
+						<label class="customer_form_field__multibox__item__title js-check-menu-title">
 							<?php
 								$get_customer_menu = get_post_meta( $post -> ID, 'customer_menu', true );
 								$customer_menu = $get_customer_menu ? $get_customer_menu : array();
@@ -88,7 +88,7 @@ function sr_insert_customer_fields() {
 							?>
 							<?php echo( $menu_term -> name ); ?> <input class="js-check-menu" type="checkbox" name="customer_menu[]" value="<?php echo( $menu_term -> name ); ?>" <?php echo $customer_menu_checked; ?>>
 						</label>
-						<select class="customer_form_field__item__multibox__selector js-menu-staff" name="customer_staff['<?php echo $menu_slug; ?>']">
+						<select class="customer_form_field__multibox__selector js-menu-staff" name="customer_staff['<?php echo $menu_slug; ?>']">
 							<option value="担当者選択">担当者選択</option>
 							<?php
 								$get_customer_staff = get_post_meta( $post -> ID, 'customer_staff', true );
@@ -130,24 +130,24 @@ function sr_insert_customer_fields() {
 			<label for="customer_treatment_datail">施術メニュー詳細</label>
 			<textarea name="customer_treatment_datail" id="customer_treatment_datail"><?php echo get_post_meta( $post->ID, 'treatment_datail', true ); ?></textarea>
 		</div>
-		<div class="customer_data">
-			<div class="customer_data__item">
+		<div class="personal_data">
+			<div class="personal_data__item">
 				<label for="customer_postal_code">郵便番号</label>
 				<input type="number" name="customer_postal_code" id="customer_postal_code" value="<?php echo get_post_meta( $post->ID, 'postal_code', true ); ?>">
 			</div>
-			<div class="customer_data__item">
+			<div class="personal_data__item">
 				<label for="customer_address">住所</label>
 				<input type="text" name="customer_address" id="customer_address" value="<?php echo get_post_meta( $post->ID, 'address', true ); ?>">
 			</div>
-			<div class="customer_data__item">
+			<div class="personal_data__item">
 				<label for="customer_tel">電話番号</label>
 				<input type="tel" name="customer_customer_tel" id="customer_customer_tel" value="<?php echo get_post_meta( $post->ID, 'customer_tel', true ); ?>">
 			</div>
-			<div class="customer_data__item">
+			<div class="personal_data__item">
 				<label for="customer_email">メールアドレス</label>
 				<input type="email" name="customer_email" id="customer_email" value="<?php echo get_post_meta( $post->ID, 'customer_email', true ); ?>">
 			</div>
-			<div class="customer_data__item">
+			<div class="personal_data__item">
 				<label for="customer_birth">生年月日</label>
 				<input type="date" name="customer_birth" id="customer_birth" value="<?php echo get_post_meta( $post->ID, 'customer_birth', true ); ?>">
 			</div>

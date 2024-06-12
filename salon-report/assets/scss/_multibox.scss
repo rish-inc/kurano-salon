@@ -1,0 +1,89 @@
+@use 'global' as g;
+
+.customer_form_field__multibox {
+	&__item {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 16px;
+		padding-bottom: 32px;
+		margin-bottom: 32px;
+		border-bottom: 1px solid #bdbdbd;
+		@include g.breakpoint( tablet ) {
+			grid-template-columns: repeat( auto-fill, 200px );
+		}
+		&__title {
+			display: inline-grid;
+			grid-template-columns: 1fr auto 1fr;
+			column-gap: 1em;
+			align-items: center;
+			position: relative;
+			&::before,
+			&::after {
+				content: "";
+				background-color: #44a48a;
+				background-color: #858585;
+				justify-self: end;
+				position: absolute;
+			}
+			&::before {
+				width: 18px;
+				height: 3px;
+				right: 8px;
+			}
+			&::after {
+				width: 3px;
+				height: 18px;
+				right: 15px;
+			}
+			&.is-open {
+				&::after {
+					display: none;
+				}
+			}
+			> input {
+				display: none;
+			}
+		}
+		&__selector {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+			margin-left: 16px;
+			@include g.breakpoint( tablet ) {
+				grid-template-columns: 1fr 1fr 1fr;
+			}
+			@include g.breakpoint( pcWide ) {
+				grid-template-columns: repeat( auto-fill, 100px );
+			}
+			> span {
+				display: flex;
+				align-items: center;
+				> label {
+					margin-top: -2.5px;
+				}
+			}
+		}
+		.customer_form_field__multibox__item__title:first-child {
+			width: 100%;
+			padding: 8px;
+			background-color: #eee;
+			font-weight: bold;
+			font-size: 14px;
+			@include g.breakpoint( tablet ) {
+			}
+		}
+		input[type=checkbox],
+		input[type=radio] {
+			width: 1rem;
+			height: 1rem;
+		}
+		.widefat tfoot td input[type=checkbox]:before,
+		.widefat th input[type=checkbox]:before,
+		.widefat thead td input[type=checkbox]:before,
+		input[type=checkbox]:checked:before {
+			width: 1.3125rem;
+			height: 1.3125rem;
+		}
+	}
+}
