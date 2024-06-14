@@ -22,6 +22,9 @@ function get_customer_menu_field( $post, $loop ) {
 			<?php
 				$get_customer_menu = get_post_meta( $post -> ID, 'customer_menu[' . $loop . ']', true );
 				$customer_menu = $get_customer_menu ? $get_customer_menu : array();
+				// echo "===================\n";
+				// var_dump( $customer_menu );
+				// echo "===================\n";
 				if( in_array( $menu_term -> name, $customer_menu ) ) {
 					$customer_menu_checked = "checked";
 				} else {
@@ -35,12 +38,13 @@ function get_customer_menu_field( $post, $loop ) {
 			<?php
 				$get_customer_staff = get_post_meta( $post -> ID, 'customer_staff[' . $loop . ']', true );
 				$customer_staff = $get_customer_staff ? $get_customer_staff : array();
+				echo "======" . $loop . "======\n";
 				foreach( $users as $user ) :
-					echo "===================\n";
-					var_dump( $customer_staff );
-					echo "-------------------\n";
-					var_dump( $user -> display_name );
-					echo "===================\n";
+					// echo "===================\n";
+					// var_dump( $customer_staff["'$menu_slug'"][$loop] );
+					// echo "-------------------\n";
+					// var_dump( $user -> display_name );
+					// echo "===================\n";
 					if( $user -> display_name == $customer_staff["'$menu_slug'"][$loop] ) {
 						$customer_staff_checked = "selected";
 					} else {
