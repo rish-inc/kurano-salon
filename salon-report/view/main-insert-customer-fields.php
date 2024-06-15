@@ -22,10 +22,6 @@ function sr_insert_customer_fields() {
 			<?php get_customer_menu_field( $post ); ?>
 		</div>
 		<?php echo SR_input::input_field( 'number', 'customer_peyment', 'お支払い金額' ); ?>
-		<!-- <div class="customer_form_field__item">
-			<label for="customer_peyment">お支払い金額</label>
-			<input type="number" name="customer_peyment[<?php echo SR_Config::PREFIX . 'report' . '0'; ?>]" id="customer_peyment_<?php echo SR_Config::PREFIX . 'report' . '0'; ?>" value="<?php echo get_post_meta( $post->ID, 'peyment[' . SR_Config::PREFIX . 'report' . '0' . ']', true ); ?>">
-		</div> -->
 		<div class="customer_form_field__item">
 			<label for="customer_treatment_datail">施術メニュー詳細</label>
 			<textarea name="customer_treatment_datail" id="customer_treatment_datail_<?php echo SR_Config::PREFIX . 'report' . '0'; ?>"><?php echo get_post_meta( $post->ID, 'treatment_datail[' . SR_Config::PREFIX . 'report' . '0' . ']', true ); ?></textarea>
