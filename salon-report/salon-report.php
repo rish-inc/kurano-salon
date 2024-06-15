@@ -2,6 +2,7 @@
 /*
  * read templates
  */
+@include_once( 'classes/class.config.php' );
 @include_once( 'add_post_type.php' );
 @include_once( 'add_custom_fields.php' );
 @include_once( 'view/main-insert-customer-fields.php' );

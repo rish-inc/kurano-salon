@@ -2,12 +2,13 @@
 /*
  * Save custom fields for shop taxonomy.
  */
-function sr_save_customer_fields( $post_id, $callback_args ) {
+function sr_save_customer_fields( $post_id ) {
 	global $post;
-	$loop = $callback_args[ "id" ];
 	$menu_terms = get_terms( 'treatment' , array( 'hide_empty' => false ) );
 
-	// if ( ! isset( $_POST[ 'sr_customer_nonce[' . $loop . ']' ] ) || ! wp_verify_nonce( $_POST[ 'sr_customer_nonce[' . $loop . ']' ], 'sr_insert_customer_fields' ) ) {
+	$prefix = SR_Config::PREFIX . 'report' . '0';
+
+	// if ( ! isset( $_POST[ 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) || ! wp_verify_nonce( $_POST[ 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' ], 'sr_insert_customer_fields' ) ) {
 	// 	return $post_id;
 	// }
 
@@ -16,39 +17,39 @@ function sr_save_customer_fields( $post_id, $callback_args ) {
 	if( ! current_user_can( 'edit_post', $post->ID ) ) { return $post_id; }
 
 
-	if ( ! empty( $_POST[ 'customer_visit_datetime[' . $loop . ']' ] ) ) {
-		update_post_meta( $post_id, 'customer_visit_datetime[' . $loop . ']', $_POST[ 'customer_visit_datetime[' . $loop . ']' ] );
+	if ( ! empty( $_POST[ 'customer_visit_datetime' ] ) ) {
+		update_post_meta( $post_id, 'customer_visit_datetime', $_POST[ 'customer_visit_datetime' ] );
 	} else {
-		delete_post_meta( $post_id, 'customer_visit_datetime[' . $loop . ']' );
+		delete_post_meta( $post_id, 'customer_visit_datetime' );
 	}
 
-	if ( ! empty( $_POST[ 'customer_visit_shop[' . $loop . ']' ] ) ) {
-		update_post_meta( $post_id, 'customer_visit_shop[' . $loop . ']', $_POST[ 'customer_visit_shop[' . $loop . ']' ] );
+	if ( ! empty( $_POST[ 'customer_visit_shop[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) ) {
+		update_post_meta( $post_id, 'customer_visit_shop[' . SR_Config::PREFIX . 'report' . '0' . ']', $_POST[ 'customer_visit_shop[' . SR_Config::PREFIX . 'report' . '0' . ']' ] );
 	} else {
-		delete_post_meta( $post_id, 'customer_visit_shop[' . $loop . ']' );
+		delete_post_meta( $post_id, 'customer_visit_shop[' . SR_Config::PREFIX . 'report' . '0' . ']' );
 	}
 
-	if ( ! empty( $_POST[ 'customer_menu[' . $loop . ']' ] ) ) {
-		update_post_meta( $post_id, 'customer_menu[' . $loop . ']', $_POST[ 'customer_menu[' . $loop . ']' ] );
+	if ( ! empty( $_POST[ 'customer_menu[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) ) {
+		update_post_meta( $post_id, 'customer_menu[' . SR_Config::PREFIX . 'report' . '0' . ']', $_POST[ 'customer_menu[' . SR_Config::PREFIX . 'report' . '0' . ']' ] );
 	} else {
-		delete_post_meta( $post_id, 'customer_menu[' . $loop . ']' );
+		delete_post_meta( $post_id, 'customer_menu[' . SR_Config::PREFIX . 'report' . '0' . ']' );
 	}
-	if ( ! empty( $_POST[ 'customer_staff[' . $loop . ']' ] ) ) {
-		update_post_meta( $post_id, 'customer_staff[' . $loop . ']', $_POST[ 'customer_staff[' . $loop . ']' ] );
+	if ( ! empty( $_POST[ 'customer_staff[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) ) {
+		update_post_meta( $post_id, 'customer_staff[' . SR_Config::PREFIX . 'report' . '0' . ']', $_POST[ 'customer_staff[' . SR_Config::PREFIX . 'report' . '0' . ']' ] );
 	} else {
-		delete_post_meta( $post_id, 'customer_staff[' . $loop . ']' );
-	}
-
-	if ( ! empty( $_POST[ 'designate[' . $loop . ']' ] ) ) {
-		update_post_meta( $post_id, 'designate[' . $loop . ']', $_POST[ 'designate[' . $loop . ']' ] );
-	} else {
-		delete_post_meta( $post_id, 'designate[' . $loop . ']' );
+		delete_post_meta( $post_id, 'customer_staff[' . SR_Config::PREFIX . 'report' . '0' . ']' );
 	}
 
-	if ( ! empty( $_POST[ 'customer_peyment[' . $loop . ']' ] ) ) {
-		update_post_meta( $post_id, 'peyment[' . $loop . ']', $_POST[ 'customer_peyment[' . $loop . ']' ] );
+	if ( ! empty( $_POST[ 'designate[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) ) {
+		update_post_meta( $post_id, 'designate[' . SR_Config::PREFIX . 'report' . '0' . ']', $_POST[ 'designate[' . SR_Config::PREFIX . 'report' . '0' . ']' ] );
 	} else {
-		delete_post_meta( $post_id, 'peyment[' . $loop . ']' );
+		delete_post_meta( $post_id, 'designate[' . SR_Config::PREFIX . 'report' . '0' . ']' );
+	}
+
+	if ( ! empty( $_POST[ 'customer_peyment[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) ) {
+		update_post_meta( $post_id, 'peyment[' . SR_Config::PREFIX . 'report' . '0' . ']', $_POST[ 'customer_peyment[' . SR_Config::PREFIX . 'report' . '0' . ']' ] );
+	} else {
+		delete_post_meta( $post_id, 'peyment[' . SR_Config::PREFIX . 'report' . '0' . ']' );
 	}
 
 }

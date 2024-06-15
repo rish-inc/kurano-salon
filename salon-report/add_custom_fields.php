@@ -4,7 +4,7 @@
  */
 function sr_add_customer_fields() {
 	add_meta_box (
-		'customer_personal_data',
+		SR_Config::PREFIX . 'personal',
 		'個人情報',
 		'sr_insert_customer_personal_fields',
 		'customer_report',
@@ -22,7 +22,7 @@ function sr_add_customer_fields() {
 	// 	);
 	// }
 	add_meta_box (
-		'customer_data0',
+		SR_Config::PREFIX . 'report' . "0",
 		'カルテ詳細情報',
 		'sr_insert_customer_fields',
 		'customer_report',
