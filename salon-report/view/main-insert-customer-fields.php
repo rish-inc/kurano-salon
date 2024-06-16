@@ -12,7 +12,7 @@ function sr_insert_customer_fields() {
 	// wp_nonce_field( 'sr_insert_customer_fields', 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' );
 	?>
 	<div class="customer_form_field">
-		<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime'] ); ?>
+		<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime', 'aaa'] ); ?>
 		<div class="customer_form_field__item">
 			<label class="customer_form_field__item__label" for="customer_visit_shop">来店ショップ</label>
 			<?php get_shoplist_field( $post ); ?>
@@ -22,9 +22,14 @@ function sr_insert_customer_fields() {
 			<?php get_customer_menu_field( $post ); ?>
 		</div>
 		<?php echo SR_input::input_field( 'number', 'customer_peyment', 'お支払い金額' ); ?>
+		<!-- <div class="customer_form_field__item">
+			<label for="customer_peyment">お支払い金額</label>
+			<input type="number" name="customer_peyment[customer_data_report0]" id="customer_peyment_customer_data_report0" value="<?php echo get_post_meta( $post->ID, 'customer_peyment', true ); ?>">
+		</div> -->
 		<div class="customer_form_field__item">
 			<label for="customer_treatment_datail">施術メニュー詳細</label>
 			<textarea name="customer_treatment_datail" id="customer_treatment_datail_<?php echo SR_Config::PREFIX . 'report' . '0'; ?>"><?php echo get_post_meta( $post->ID, 'treatment_datail[' . SR_Config::PREFIX . 'report' . '0' . ']', true ); ?></textarea>
 		</div>
 	</div>
+	<?php var_dump( get_post_meta( $post -> ID, "", false ) ); ?>
 <?php }
