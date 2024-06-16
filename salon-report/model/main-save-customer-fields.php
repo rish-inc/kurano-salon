@@ -16,9 +16,9 @@ function sr_save_customer_fields( $post_id ) {
 		'customer_peyment',
 		'customer_treatment_datail'];
 
-	// if ( ! isset( $_POST[ 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) || ! wp_verify_nonce( $_POST[ 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' ], 'sr_insert_customer_fields' ) ) {
-	// 	return $post_id;
-	// }
+	if ( ! isset( $_POST[ 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' ] ) || ! wp_verify_nonce( $_POST[ 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' ], 'sr_insert_customer_fields' ) ) {
+		return $post_id;
+	}
 
 	foreach( $names as $name ) {
 		if ( ! empty( $_POST[ $name . '_' . SR_Config::PREFIX . 'report' . '0' ] ) ) {

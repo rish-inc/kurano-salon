@@ -9,7 +9,7 @@
 
 function sr_insert_customer_fields() {
 	global $post;
-	// wp_nonce_field( 'sr_insert_customer_fields', 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' );
+	wp_nonce_field( 'sr_insert_customer_fields', 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' );
 	?>
 	<div class="customer_form_field">
 		<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime', 'aaa'] ); ?>
@@ -31,5 +31,4 @@ function sr_insert_customer_fields() {
 			<textarea name="customer_treatment_datail" id="customer_treatment_datail_<?php echo SR_Config::PREFIX . 'report' . '0'; ?>"><?php echo get_post_meta( $post->ID, 'treatment_datail[' . SR_Config::PREFIX . 'report' . '0' . ']', true ); ?></textarea>
 		</div>
 	</div>
-	<?php var_dump( get_post_meta( $post -> ID, "", false ) ); ?>
 <?php }
