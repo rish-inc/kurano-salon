@@ -5,7 +5,6 @@ const fillboxTitle = document.getElementsByClassName( 'js-check-menu-title' );
 const checkDesignate = document.getElementsByClassName( 'js-check-designate' );
 
 const menuDesignate = document.getElementsByClassName( 'js-menu-designate' );
-
 for( let i = 0; i < checkMenu.length; i++ ) {
 	if ( checkMenu[ i ].checked ) {
 		menuStaff[ i ].style.display = "block";

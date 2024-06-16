@@ -11,16 +11,19 @@ function get_customer_menu_field( $post ) {
 			'order' => 'ASC',
 		)
 	);
+	$attr_menu = SR_fieldname_to_attr::change_id_name( 'customer_menu' )[0];
 ?>
-<ul id="customer_menu_<?php echo SR_Config::PREFIX . 'report' . "0"; ?>" class="customer_form_field__multibox">
+<ul id="<?php echo $attr_menu['id']; ?>" class="customer_form_field__multibox">
 <?php foreach( $menu_terms as $menu_term ) :
-	$menu_id   = $menu_term -> term_id;
-	$menu_slug = $menu_term -> slug;
+	$menu_id        = $menu_term -> term_id;
+	$menu_slug      = $menu_term -> slug;
+	$attr_staff     = SR_fieldname_to_attr::change_id_name( 'customer_staff' )[0];
+	$attr_designate = SR_fieldname_to_attr::change_id_name( 'designate' )[0];
 	?>
 	<li class="customer_form_field__multibox__item">
 		<label class="customer_form_field__multibox__item__title js-check-menu-title">
 			<?php
-				$get_customer_menu = get_post_meta( $post -> ID, 'customer_menu', true );
+				$get_customer_menu = get_post_meta( $post -> ID, $attr_menu['name'], true );
 				$customer_menu = $get_customer_menu ? $get_customer_menu : array();
 				if( in_array( $menu_term -> name, $customer_menu ) ) {
 					$customer_menu_checked = "checked";
@@ -28,12 +31,12 @@ function get_customer_menu_field( $post ) {
 					$customer_menu_checked = "";
 				}
 			?>
-			<?php echo( $menu_term -> name ); ?> <input class="js-check-menu" type="checkbox" name="customer_menu[<?php echo SR_Config::PREFIX . 'report' . "0"; ?>]" value="<?php echo( $menu_term -> name ); ?>" <?php echo $customer_menu_checked; ?>>
+			<?php echo( $menu_term -> name ); ?> <input class="js-check-menu" type="checkbox" name="<?php echo $attr_menu['name'] . '[' . $menu_slug . ']'; ?>" value="<?php echo( $menu_term -> name ); ?>" <?php echo $customer_menu_checked; ?>>
 		</label>
-		<select class="customer_form_field__multibox__selector js-menu-staff" name="customer_staff[<?php echo SR_Config::PREFIX . 'report' . "0"; ?>]['<?php echo $menu_slug; ?>']">
+		<select class="customer_form_field__multibox__selector js-menu-staff" name="<?php echo $attr_staff['name']; ?>['<?php echo $menu_slug; ?>']">
 			<option value="担当者選択">担当者選択</option>
 			<?php
-				$get_customer_staff = get_post_meta( $post -> ID, 'customer_staff', true );
+				$get_customer_staff = get_post_meta( $post -> ID, $attr_staff['name'], true );
 				$customer_staff = $get_customer_staff ? $get_customer_staff : array();
 				foreach( $users as $user ) :
 					if( $user -> display_name == $customer_staff["'$menu_slug'"] ) {
@@ -48,7 +51,7 @@ function get_customer_menu_field( $post ) {
 		</select>
 		<div class="js-menu-designate">
 			<?php
-				$get_designate = get_post_meta( $post->ID, 'designate[' . SR_Config::PREFIX . 'report' . "0" . ']', true );
+				$get_designate = get_post_meta( $post->ID, $attr_designate['name'], true );
 				$designate = $get_designate ? $get_designate : array();
 				if ( isset( $designate["'$menu_slug'"] ) )  {
 					$designate_check = "checked";
@@ -57,7 +60,7 @@ function get_customer_menu_field( $post ) {
 				}
 			?>
 			<span>
-				<label>指名 <input class="js-check-designate" type="checkbox" name="designate['<?php echo $menu_slug; ?>'][<?php echo SR_Config::PREFIX . 'report' . "0"; ?>]" <?php echo $designate_check; ?>></label>
+				<label>指名 <input class="js-check-designate" type="checkbox" name="<?php echo $attr_designate['name']; ?>['<?php echo $menu_slug; ?>']" <?php echo $designate_check; ?>></label>
 			</span>
 		</div>
 	<li>
