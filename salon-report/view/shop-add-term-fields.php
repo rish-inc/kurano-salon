@@ -3,7 +3,7 @@
  * add custom fields for term of shop taxonomy
  */
 function sr_add_term_fields_shop( $shop ) {
-	wp_nonce_field( 'term_fields_shop', 'sr_shop_term_nonce' );
+	wp_nonce_field( SR_Config::NAME . 'shop', SR_Config::PREFIX . 'shop' );
 	?>
 	<div class="form-field form-required term-image-wrap">
 		<label for="sr_custom_postal_code">郵便番号</label>

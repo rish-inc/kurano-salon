@@ -5,7 +5,11 @@
 function sr_save_customer_personal_fields( $post_id ) {
 	global $post;
 
-	if ( ! isset( $_POST[ 'sr_customer_personal_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'sr_customer_personal_nonce' ], 'sr_insert_customer_personal_fields' ) ) {
+	if ( ! isset( $_POST[ SR_Config::PREFIX . 'personal' ] ) ) {
+		return $post_id;
+	}
+
+	if ( ! wp_verify_nonce( $_POST[ SR_Config::PREFIX . 'personal' ], SR_Config::NAME . 'personal' ) ) {
 		return $post_id;
 	}
 

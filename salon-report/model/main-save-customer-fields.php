@@ -15,7 +15,11 @@ function sr_save_customer_fields( $post_id ) {
 		'customer_peyment',
 		'customer_treatment_datail'];
 
-	if ( ! isset( $_POST[ 'sr_customer_nonce[' . $prefix . ']' ] ) || ! wp_verify_nonce( $_POST[ 'sr_customer_nonce[' . $prefix . ']' ], 'sr_insert_customer_fields' ) ) {
+	if ( ! isset( $_POST[ SR_Config::PREFIX . 'report' ] )  ){
+		return;
+	}
+
+	if ( ! wp_verify_nonce( $_POST[ SR_Config::PREFIX . 'report' ], SR_Config::NAME . 'fields' ) ) {
 		return $post_id;
 	}
 

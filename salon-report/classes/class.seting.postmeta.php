@@ -14,7 +14,6 @@ class SR_input {
 	public $data, $type, $name, $title, $classes = array();
 	public static function input_field ( $type, $name, $title, $classes = NULL ) {
 		global $post;
-
 		$attr = SR_fieldname_to_attr::change_id_name( $name )[0];
 		$value = get_post_meta( $post -> ID, $attr['name'], true );
 		$class = $classes ? implode( " ", $classes ) : $classes;

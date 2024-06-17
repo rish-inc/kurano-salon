@@ -8,7 +8,7 @@
 
 function sr_insert_customer_personal_fields() {
 	global $post;
-	wp_nonce_field( 'sr_insert_customer_personal_fields', 'sr_customer_personal_nonce' );
+	wp_nonce_field( SR_Config::NAME . 'personal', SR_Config::PREFIX . 'personal' );
 	?>
 	<div class="customer_form_field__item">
 		<p class="customer_form_field__item__label" for="customer_ruby">会員番号</p>

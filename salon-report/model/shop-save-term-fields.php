@@ -3,7 +3,13 @@
  * save custom fields for term of shop taxonomy
  */
 function sr_save_customer_fields_shop( $term_id ) {
-	if ( ! isset( $_POST[ 'sr_shop_term_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'sr_shop_term_nonce' ], 'term_fields_shop' ) ) {
+	global $post;
+
+	if ( ! isset( $_POST[ SR_Config::PREFIX . 'shop' ] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( $_POST[ SR_Config::PREFIX . 'shop' ], SR_Config::NAME . 'shop' ) ) {
 		return;
 	}
 

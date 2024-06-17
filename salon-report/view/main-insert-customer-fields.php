@@ -9,7 +9,7 @@
 
 function sr_insert_customer_fields() {
 	global $post;
-	wp_nonce_field( 'sr_insert_customer_fields', 'sr_customer_nonce[' . SR_Config::PREFIX . 'report' . '0' . ']' );
+	wp_nonce_field( SR_Config::NAME . 'fields', SR_Config::PREFIX . 'report' );
 	?>
 	<div class="customer_form_field">
 		<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime', 'aaa'] ); ?>

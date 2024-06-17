@@ -3,7 +3,9 @@
  * edit custom fields for term of shop taxonomy
  */
 function sr_edit_customer_fields_shop( $shop ) {
-	wp_nonce_field( 'term_fields_shop', 'sr_shop_term_nonce' );
+
+	wp_nonce_field( SR_Config::NAME . 'shop', SR_Config::PREFIX . 'shop' );
+
 	$t_id = $shop -> term_id;
 	$sr_custom = get_option( "cat_{$t_id}" );
 ?>

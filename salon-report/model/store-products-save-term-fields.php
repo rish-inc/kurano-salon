@@ -3,7 +3,10 @@
  * save custom fields for term of store products taxonomy
  */
 function sr_save_customer_fields_store_products( $term_id ) {
-	if ( ! isset( $_POST[ 'sr_store_products_term_nonce' ] ) || ! wp_verify_nonce( $_POST[ 'sr_store_products_term_nonce' ], 'term_fields_store_products' ) ) {
+	if ( ! isset( $_POST[ SR_Config::PREFIX . 'store_products' ] ) ) {
+		return;
+	}
+	if ( ! wp_verify_nonce( $_POST[ SR_Config::PREFIX . 'store_products' ], SR_Config::NAME . 'store_products' ) ) {
 		return;
 	}
 
