@@ -12,7 +12,7 @@ function sr_insert_customer_fields() {
 	wp_nonce_field( SR_Config::NAME . 'fields', SR_Config::PREFIX . 'report' );
 	?>
 	<div class="customer_form_field">
-		<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime', 'aaa'] ); ?>
+		<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime'] ); ?>
 		<div class="customer_form_field__item">
 			<label class="customer_form_field__item__label" for="customer_visit_shop">来店ショップ</label>
 			<?php get_shoplist_field( $post ); ?>
