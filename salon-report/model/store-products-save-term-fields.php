@@ -1,6 +1,7 @@
 <?php
 /*
  * save custom fields for term of store products taxonomy
+ * Save for shop product items
  */
 function sr_save_customer_fields_store_products( $term_id ) {
 	if ( ! isset( $_POST[ SR_Config::PREFIX . 'store_products' ] ) ) {

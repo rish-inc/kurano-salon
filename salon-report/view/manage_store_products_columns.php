@@ -4,7 +4,7 @@
  */
 
 function add_column_for_store_products( $columns ) {
-	$columns['sr_custom_store_products_price'] = '金額';
+	$columns['sr_custom_store_products_price'] = '商品価格';
 	return $columns;
 }
 add_filter( 'manage_edit-store_products_columns', 'add_column_for_store_products', 1, 2 );
@@ -25,7 +25,7 @@ function load_data_column_for_store_products( $content, $column_name, $term_id )
 add_action('manage_store_products_custom_column', 'load_data_column_for_store_products', 10, 3 );
 
 function sortable_column_for_store_products( $columns ) {
-    $columns['sr_custom_store_products_price'] = '金額';
+    $columns['sr_custom_store_products_price'] = '商品価格';
     return $columns;
 }
 add_filter( 'manage_edit-store_products_sortable_columns', 'sortable_column_for_store_products' );

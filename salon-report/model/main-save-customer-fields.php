@@ -15,7 +15,7 @@ function sr_save_customer_fields( $post_id ) {
 		'customer_peyment',
 		'customer_treatment_datail'];
 
-	if ( ! isset( $_POST[ SR_Config::PREFIX . 'report' ] )  ){
+	if ( ! isset( $_POST[ SR_Config::PREFIX . 'report' ] ) ) {
 		return;
 	}
 
