@@ -1,3 +1,5 @@
+/*
+
 css/
 .htaccess
 node_modules/
@@ -6,3 +8,6 @@ package-lock.json
 Thumbs.db
 dist/
 .vscode
+
+!salon-report/
+!salon-report-default-shop/

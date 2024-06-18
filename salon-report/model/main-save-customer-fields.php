@@ -13,7 +13,9 @@ function sr_save_customer_fields( $post_id ) {
 		'customer_staff',
 		'designate',
 		'customer_peyment',
-		'customer_treatment_datail'];
+		'customer_treatment_datail',
+		'customer_handdraw'
+	];
 
 	if ( ! isset( $_POST[ SR_Config::PREFIX . 'report' ] ) ) {
 		return;

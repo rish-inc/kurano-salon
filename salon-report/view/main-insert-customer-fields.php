@@ -2,10 +2,6 @@
 /*
  * Inesrt custom fields for shop taxonomy.
  */
-@include_once( get_theme_file_path( '/salon-report/classes/class.seting.postmeta.php' ) );
-@include_once( get_theme_file_path( '/salon-report/contoroller/gender.php' ) );
-@include_once( get_theme_file_path( '/salon-report/contoroller/shoplist.php' ) );
-@include_once( get_theme_file_path( '/salon-report/contoroller/customer_menu.php' ) );
 
 function sr_insert_customer_fields() {
 	global $post;
@@ -20,6 +16,11 @@ function sr_insert_customer_fields() {
 		<div class="customer_form_field__item">
 			<p class="customer_form_field__item__label">施術メニュー</p>
 			<?php get_customer_menu_field( $post ); ?>
+		</div>
+		<div class="customer_form_field__item">
+			<label for="customer_treatment_datail">施術メモ</label>
+			<div id="handDraw" class="hand-draw"></div>
+			<input type="hidden" name="customer_handdraw" class="js-handdraw-data" value="">
 		</div>
 		<?php echo SR_input::input_field( 'number', 'customer_peyment', 'お支払い金額' ); ?>
 		<div class="customer_form_field__item">

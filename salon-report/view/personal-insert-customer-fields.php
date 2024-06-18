@@ -2,9 +2,6 @@
 /*
  * Inesrt custom fields personal data for shop taxonomy.
  */
-@include_once( get_theme_file_path( '/salon-report/contoroller/gender.php' ) );
-@include_once( get_theme_file_path( '/salon-report/contoroller/shoplist.php' ) );
-@include_once( get_theme_file_path( '/salon-report/contoroller/customer_menu.php' ) );
 
 function sr_insert_customer_personal_fields() {
 	global $post;

@@ -7,7 +7,6 @@
  * $classes = input class Array();
  */
 
-@include_once( get_theme_file_path( '/salon-report/classes/class.setting.fieldname_to_attr.php' ) );
 
 class SR_input {
 	public $name_attr;
