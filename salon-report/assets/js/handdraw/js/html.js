@@ -27,10 +27,10 @@ document.querySelector('#handDraw').innerHTML = `<section class="inner">
 		<canvas id="pointerCanvas" class="ponter-canvas"></canvas>
 		<dialog id="clear-modal" class="dialog-clear">
 			<p>削除しても良いですか？</p>
-			<form id="clear-modal-form" class="dialog-clear__buttons" method="dialog">
+			<div id="clear-modal-form" class="dialog-clear__buttons" method="dialog">
 				<button id="clearCancel" class="clear-no">キャンセル</button>
 				<button id="clearConfirm" class="clear-ok">削除</button>
-			</form>
+			</div>
 		</dialog>
 	</article>
 	<ul class="ui-set">

@@ -2,13 +2,16 @@
 /*
  * Inesrt custom fields for shop taxonomy.
  */
-
 function sr_insert_customer_fields() {
 	global $post;
 	wp_nonce_field( SR_Config::NAME . 'fields', SR_Config::PREFIX . 'report' );
+	$handdraw = SR_fieldname_to_attr::change_id_name( 'customer_handdraw' )[0];
+	$treatment_datail = SR_fieldname_to_attr::change_id_name( 'customer_treatment_datail' )[0];
 	?>
 	<div class="customer_form_field">
-		<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime'] ); ?>
+		<div class="customer_form_field__item">
+			<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime'] ); ?>
+		</div>
 		<div class="customer_form_field__item">
 			<label class="customer_form_field__item__label" for="customer_visit_shop">来店ショップ</label>
 			<?php get_shoplist_field( $post ); ?>
@@ -20,12 +23,14 @@ function sr_insert_customer_fields() {
 		<div class="customer_form_field__item">
 			<label for="customer_treatment_datail">施術メモ</label>
 			<div id="handDraw" class="hand-draw"></div>
-			<input type="hidden" name="customer_handdraw" class="js-handdraw-data" value="">
+			<input type="hidden" data-loop="0" id="<?php echo $handdraw['id'] ?>" name="<?php echo $handdraw['name'] ?>" class="js-handdraw-data" value="<?php echo get_post_meta( $post->ID, $handdraw['name'], true ); ?>">
 		</div>
-		<?php echo SR_input::input_field( 'number', 'customer_peyment', 'お支払い金額' ); ?>
+		<div class="customer_form_field__item">
+			<?php echo SR_input::input_field( 'number', 'customer_peyment', 'お支払い金額' ); ?>
+		</div>
 		<div class="customer_form_field__item">
 			<label for="customer_treatment_datail">施術メニュー詳細</label>
-			<textarea name="customer_treatment_datail" id="customer_treatment_datail_<?php echo SR_Config::PREFIX . 'report' . '0'; ?>"><?php echo get_post_meta( $post->ID, 'treatment_datail[' . SR_Config::PREFIX . 'report' . '0' . ']', true ); ?></textarea>
+			<textarea name="<?php echo $treatment_datail['name'] ?>" id="<?php echo $treatment_datail['id'] ?>"><?php echo get_post_meta( $post->ID, $treatment_datail['name'], true ); ?></textarea>
 		</div>
 	</div>
 <?php }

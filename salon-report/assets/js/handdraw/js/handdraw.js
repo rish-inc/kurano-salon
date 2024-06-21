@@ -1,3 +1,4 @@
+const loop           = document.querySelector( '.js-handdraw-data' ).dataset.loop;
 const imageCanvas    = document.getElementById( "imageCanvas" );
 const drawCanvas     = document.getElementById( "drawCanvas" );
 const tempCanvas     = document.getElementById( "tempCanvas" );
@@ -73,6 +74,7 @@ if ( imageCanvas.getContext && drawCanvas.getContext && tempCanvas.getContext &&
 	window.addEventListener( 'load', function ( e ) {
 		const updateButton = document.querySelector( '.editor-post-publish-button' );
 		image( canvas );
+		loadImg();
 		pointerCanvas.addEventListener( 'mousedown',  mouseDown );
 		pointerCanvas.addEventListener( 'touchstart', mouseDown );
 		pointerCanvas.addEventListener( 'mousemove',  mouseMove );
@@ -258,14 +260,10 @@ let buttonStatusToggle = () => {
 	if( dataReduce ) {
 		clearButton.disabled = false;
 		clearMark.style.color = colorFaluse;
-		// downloadButton.disabled = false;
-		// downloadMark.style.color = colorFaluse;
 		return false;
 	} else {
 		clearButton.disabled = true;
 		clearMark.style.color = null;
-		// downloadButton.disabled = true;
-		// downloadMark.style.color = null;
 		return true;
 	}
 }
@@ -277,9 +275,9 @@ let clear = () => {
 
 let clearConfirm = () => {
 	undoStack();
-	ctxs.imageCtx.clearRect( 0, 0, imageCanvas.width, imageCanvas.height );
 	ctxs.drawCtx.clearRect( 0, 0, drawCanvas.width, drawCanvas.height );
-	ctxs.pointerCtx.clearRect( 0, 0, drawCanvas.width, drawCanvas.height );
+	ctxs.drawTempCtx.clearRect( 0, 0, tempCanvas.width, tempCanvas.height );
+	ctxs.pointerCtx.clearRect( 0, 0, pointerCanvas.width, pointerCanvas.height );
 	buttonStatusToggle();
 	clearModal.close();
 }
@@ -296,8 +294,31 @@ let saveImg = ( e ) => {
 	}
 }
 
+let loadImg = async ( e ) => {
+	const dataImg = document.querySelector( '.js-handdraw-data' ).value;
+	const img = new Image( canvas.width, canvas.height );
+	img.onload = () => {
+		ctxs.drawCtx.drawImage( img, 0, 0, canvas.width, canvas.height );
+	}
+	img.src = dataImg;
+	// console.log( img );
+
+	// img.src = await base64Decode( dataImg );
+	// console.log( img );
+	// img.onload = () => {
+	// 	ctxs.drawCtx.putImageData( dataImg, 0, 0, drawCanvas.width, drawCanvas.height );
+	// }
+	console.log( img );
+	// ctxs.drawCtx.putImageData( img, 0, 0, drawCanvas.width, drawCanvas.height );
+	// img.src = img.data;
+}
+
+let base64Decode = async ( dataImg, type = "image/png;" ) => {
+	return fetch ( dataImg ).then( response => response.blob() ).then( blob => blob.text() );
+}
+
 let image = ( canvas ) => {
 	const img = new Image( canvas.width, canvas.height );
 	img.src = BGIMG;
-	img.addEventListener( "load", () => ctxs.drawTempCtx.drawImage( img, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height) );
+	img.addEventListener( "load", () => ctxs.imageCtx.drawImage( img, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height ) );
 }
