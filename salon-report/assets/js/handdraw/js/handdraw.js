@@ -1,4 +1,4 @@
-const loop           = document.querySelector( '.js-handdraw-data' ).dataset.loop;
+const loop           = document.querySelector ( '.js-handdraw-data' ).dataset.loop;
 const imageCanvas    = document.getElementById( "imageCanvas" );
 const drawCanvas     = document.getElementById( "drawCanvas" );
 const tempCanvas     = document.getElementById( "tempCanvas" );
@@ -301,22 +301,9 @@ let loadImg = async ( e ) => {
 		ctxs.drawCtx.drawImage( img, 0, 0, canvas.width, canvas.height );
 	}
 	img.src = dataImg;
-	// console.log( img );
-
-	// img.src = await base64Decode( dataImg );
-	// console.log( img );
-	// img.onload = () => {
-	// 	ctxs.drawCtx.putImageData( dataImg, 0, 0, drawCanvas.width, drawCanvas.height );
-	// }
-	console.log( img );
-	// ctxs.drawCtx.putImageData( img, 0, 0, drawCanvas.width, drawCanvas.height );
-	// img.src = img.data;
 }
 
-let base64Decode = async ( dataImg, type = "image/png;" ) => {
-	return fetch ( dataImg ).then( response => response.blob() ).then( blob => blob.text() );
-}
-
+//Load human image to background-image
 let image = ( canvas ) => {
 	const img = new Image( canvas.width, canvas.height );
 	img.src = BGIMG;
