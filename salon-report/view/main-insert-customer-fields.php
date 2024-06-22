@@ -33,7 +33,7 @@ function sr_insert_customer_fields() {
 		</div>
 		<div class="customer_form_field__item">
 			<label for="customer_treatment_datail">施術メニュー詳細</label>
-			<textarea name="<?php echo $treatment_datail['name'] ?>" id="<?php echo $treatment_datail['id'] ?>"><?php echo get_post_meta( $post->ID, $treatment_datail['name'], true ); ?></textarea>
+			<textarea name="<?php echo $treatment_datail['name'] ?>" id="<?php echo $treatment_datail['id'] ?>"><?php echo esc_html( get_post_meta( $post->ID, $treatment_datail['name'], true ) ); ?></textarea>
 		</div>
 	</div>
 <?php }
