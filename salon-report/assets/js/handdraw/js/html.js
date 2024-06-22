@@ -1,4 +1,6 @@
-document.querySelector('#handDraw').innerHTML = `<section class="inner">
+const loop = document.querySelector ( '.js-handdraw-data' ).dataset.loop;
+let selector = document.querySelector( '#handDraw_customer_data_report0' );
+selector.innerHTML = `<section class="inner">
 	<ul class="ui-set">
 		<li>
 			<label class="form-check-label">
@@ -16,39 +18,39 @@ document.querySelector('#handDraw').innerHTML = `<section class="inner">
 		</li>
 		<li class="pen-size">
 			<i class="fa-solid fa-circle"></i>
-			<input id="brush-size-range" type="range" class="form-weight-range" min="1" max="20" value="4"></input>
-			<span id="brush-size" class="brush-size-num">4</span>
+			<input id="brush-size-range`+loop+`" type="range" class="form-weight-range" min="1" max="20" value="4"></input>
+			<span id="brush-size`+loop+`" class="brush-size-num">4</span>
 		</li>
 	</ul>
-	<article id="canvas-area" width="100%" class="canvas-wrapper">
-		<canvas id="imageCanvas" class="image-canvas"></canvas>
-		<canvas id="drawCanvas" class="draw-canvas"></canvas>
-		<canvas id="tempCanvas" class="draw-temp-canvas"></canvas>
-		<canvas id="pointerCanvas" class="ponter-canvas"></canvas>
-		<dialog id="clear-modal" class="dialog-clear">
+	<article id="canvas-area`+loop+`" width="100%" class="canvas-wrapper">
+		<canvas id="imageCanvas`+loop+`" class="image-canvas"></canvas>
+		<canvas id="drawCanvas`+loop+`" class="draw-canvas"></canvas>
+		<canvas id="tempCanvas`+loop+`" class="draw-temp-canvas"></canvas>
+		<canvas id="pointerCanvas`+loop+`" class="ponter-canvas"></canvas>
+		<dialog id="clear-modal`+loop+`" class="dialog-clear">
 			<p>削除しても良いですか？</p>
-			<div id="clear-modal-form" class="dialog-clear__buttons" method="dialog">
-				<button id="clearCancel" class="clear-no">キャンセル</button>
-				<button id="clearConfirm" class="clear-ok">削除</button>
+			<div id="clear-modal-form`+loop+`" class="dialog-clear__buttons" method="dialog">
+				<button id="clearCancel`+loop+`" class="clear-no" type="cancel">キャンセル</button>
+				<button id="clearConfirm`+loop+`" class="clear-ok">削除</button>
 			</div>
 		</dialog>
 	</article>
 	<ul class="ui-set">
 		<li>
-			<button id="undo" class="button-undo">
-				<i id="undoMark" class="fa-solid fa-arrow-rotate-left"></i>
+			<button id="undo`+loop+`" class="button-undo">
+				<i id="undoMark`+loop+`" class="fa-solid fa-arrow-rotate-left"></i>
 				<span>戻す</span>
 			</button>
 		</li>
 		<li>
-			<button id="redo" class="button-redo">
-				<i id="redoMark" class="fa-solid fa-arrow-rotate-right"></i>
+			<button id="redo`+loop+`" class="button-redo">
+				<i id="redoMark`+loop+`" class="fa-solid fa-arrow-rotate-right"></i>
 				<span>進む</span>
 			</button>
 		</li>
 		<li class="right">
-			<button id="clear" class="button-clear">
-				<i id="clearMark" class="fa-solid fa-trash"></i>
+			<button id="clear`+loop+`" class="button-clear">
+				<i id="clearMark`+loop+`" class="fa-solid fa-trash"></i>
 				<span>削除</span>
 			</button>
 		</li>

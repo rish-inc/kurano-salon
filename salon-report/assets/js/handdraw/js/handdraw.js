@@ -1,8 +1,7 @@
-const loop           = document.querySelector ( '.js-handdraw-data' ).dataset.loop;
-const imageCanvas    = document.getElementById( "imageCanvas" );
-const drawCanvas     = document.getElementById( "drawCanvas" );
-const tempCanvas     = document.getElementById( "tempCanvas" );
-const pointerCanvas  = document.getElementById( "pointerCanvas" );
+const imageCanvas    = document.getElementById( "imageCanvas" + loop );
+const drawCanvas     = document.getElementById( "drawCanvas" + loop );
+const tempCanvas     = document.getElementById( "tempCanvas" + loop );
+const pointerCanvas  = document.getElementById( "pointerCanvas" + loop );
 const BGIMG          = path + "/salon-report/assets/js/handdraw/img/human.webp";
 let mode  = 1; //1:pen 2:eraser
 let offsetX, offsetY;
@@ -13,22 +12,21 @@ const canvas = {
 	height: 350
 }
 
-const colorFaluse = "#333";
+const colorFalse = "#333";
 const undoMax   = 10;
 const undoData  = [];
 const redoData  = [];
-const undoMark  = document.getElementById( 'undoMark' );
-const redoMark  = document.getElementById( 'redoMark' );
-const clearMark = document.getElementById( 'clearMark' );
-// const downloadMark = document.getElementById( 'downloadMark' );
-const brushSizeRange = document.getElementById( 'brush-size-range' );
-const clearButton = document.getElementById( 'clear' );
-const clearModal  = document.getElementById( 'clear-modal' );
-const clearCancelButton = document.getElementById( 'clearCancel' );
-const clearConfirmButton = document.getElementById( 'clearConfirm' );
-const clearModalForm  = document.getElementById( 'clear-modal-form' );
-const undoButton  = document.getElementById( 'undo' );
-const redoButton  = document.getElementById( 'redo' );
+const undoMark  = document.getElementById( 'undoMark' + loop );
+const redoMark  = document.getElementById( 'redoMark' + loop );
+const clearMark = document.getElementById( 'clearMark' + loop );
+const brushSizeRange = document.getElementById( 'brush-size-range' + loop );
+const clearButton = document.getElementById( 'clear' + loop );
+const clearModal  = document.getElementById( 'clear-modal' + loop );
+const clearCancelButton = document.getElementById( 'clearCancel' + loop );
+const clearConfirmButton = document.getElementById( 'clearConfirm' + loop );
+const clearModalForm  = document.getElementById( 'clear-modal-form' + loop );
+const undoButton  = document.getElementById( 'undo' + loop );
+const redoButton  = document.getElementById( 'redo' + loop );
 clearButton.disabled = true;
 undoButton.disabled = true;
 redoButton.disabled = true;
@@ -49,7 +47,7 @@ let option = {
 }
 
 let brushSizeChange = ( num ) => {
-	document.getElementById( 'brush-size' ).innerHTML = num;
+	document.getElementById( 'brush-size' + loop ).innerHTML = num;
 	option.brushSize = num;
 }
 
@@ -70,7 +68,6 @@ let zoom = () => {
 }
 
 if ( imageCanvas.getContext && drawCanvas.getContext && tempCanvas.getContext && pointerCanvas.getContext ) {
-
 	window.addEventListener( 'load', function ( e ) {
 		const updateButton = document.querySelector( '.editor-post-publish-button' );
 		image( canvas );
@@ -88,6 +85,7 @@ if ( imageCanvas.getContext && drawCanvas.getContext && tempCanvas.getContext &&
 		} );
 		zoom();
 		updateButton.addEventListener( 'click', ( e ) => saveImg( e ) );
+		buttonStatusToggle();
 	} );
 	window.addEventListener( 'resize', zoom() );
 	window.addEventListener( 'change', () => {
@@ -257,9 +255,9 @@ let buttonStatusToggle = () => {
 	imageData = ctxs.drawCtx.getImageData( 0, 0, drawCanvas.width, drawCanvas.height );
 	const data = imageData.data;
 	const dataReduce = data.reduce( function ( prev, current, i, arr ) { return prev + current } );
-	if( dataReduce ) {
+	if( dataReduce || data ) {
 		clearButton.disabled = false;
-		clearMark.style.color = colorFaluse;
+		clearMark.style.color = colorFalse;
 		return false;
 	} else {
 		clearButton.disabled = true;
@@ -271,6 +269,7 @@ let buttonStatusToggle = () => {
 let clear = () => {
 	clearModal.showModal();
 	clearConfirmButton.addEventListener( 'click', clearConfirm );
+	clearCancelButton.addEventListener(  'click', () => clearModal.close() );
 }
 
 let clearConfirm = () => {

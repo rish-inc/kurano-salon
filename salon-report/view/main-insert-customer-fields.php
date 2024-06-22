@@ -5,9 +5,12 @@
 function sr_insert_customer_fields() {
 	global $post;
 	wp_nonce_field( SR_Config::NAME . 'fields', SR_Config::PREFIX . 'report' );
-	$handdraw = SR_fieldname_to_attr::change_id_name( 'customer_handdraw' )[0];
+
+	$handdraw         = SR_fieldname_to_attr::change_id_name( 'handDraw' )[0];
+	$handdraw_hidden  = SR_fieldname_to_attr::change_id_name( 'customer_handdraw' )[0];
 	$treatment_datail = SR_fieldname_to_attr::change_id_name( 'customer_treatment_datail' )[0];
-	?>
+
+?>
 	<div class="customer_form_field">
 		<div class="customer_form_field__item">
 			<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', ['js-datetime'] ); ?>
@@ -22,8 +25,8 @@ function sr_insert_customer_fields() {
 		</div>
 		<div class="customer_form_field__item">
 			<label for="customer_treatment_datail">施術メモ</label>
-			<div id="handDraw" class="hand-draw"></div>
-			<input type="hidden" data-loop="0" id="<?php echo $handdraw['id'] ?>" name="<?php echo $handdraw['name'] ?>" class="js-handdraw-data" value="<?php echo get_post_meta( $post->ID, $handdraw['name'], true ); ?>">
+			<div id="<?php echo $handdraw['name'] ?>" class="hand-draw"></div>
+			<input type="hidden" data-loop="0" id="<?php echo $handdraw_hidden['id'] ?>" name="<?php echo $handdraw_hidden['name'] ?>" class="js-handdraw-data" value="<?php echo get_post_meta( $post->ID, $handdraw_hidden['name'], true ); ?>">
 		</div>
 		<div class="customer_form_field__item">
 			<?php echo SR_input::input_field( 'number', 'customer_peyment', 'お支払い金額' ); ?>
