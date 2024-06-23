@@ -1,5 +1,5 @@
 datas.forEach( data => {
-	let   loop = data.dataset.loop;
+	let   loop           = data.dataset.loop;
 	const imageCanvas    = document.getElementById( 'imageCanvas' + loop );
 	const drawCanvas     = document.getElementById( 'drawCanvas' + loop );
 	const tempCanvas     = document.getElementById( 'tempCanvas' + loop );
@@ -91,7 +91,7 @@ datas.forEach( data => {
 		} );
 		window.addEventListener( 'resize', zoom() );
 		window.addEventListener( 'change', () => {
-			mode = Number( document.querySelector( 'input[name="mode"]:checked' ).value );
+			mode = Number( document.querySelector( 'input[name="mode' + loop + '"]:checked' ).value );
 		} );
 		brushSizeRange.addEventListener( 'change', ( e ) =>  {
 			brushSizeChange( e.target.value );
@@ -284,19 +284,18 @@ datas.forEach( data => {
 	}
 
 	let saveImg = ( e ) => {
-		const dataPush = document.querySelector( '.js-handdraw-data' );
 		if ( buttonStatusToggle() ) {
 			e.preventDefault();
 		} else {
 			let date = new Date;
 			let timestamp = Math.floor( date.getTime() / 1000 );
 			let img = drawCanvas.toDataURL( "image/png" );
-			dataPush.value = img;
+			data.value = img;
 		}
 	}
 
 	let loadImg = async ( e ) => {
-		const dataImg = document.querySelector( '.js-handdraw-data' ).value;
+		const dataImg = data.value;
 		const img = new Image( canvas.width, canvas.height );
 		img.onload = () => {
 			ctxs.drawCtx.drawImage( img, 0, 0, canvas.width, canvas.height );

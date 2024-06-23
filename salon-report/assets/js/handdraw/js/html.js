@@ -7,14 +7,14 @@ datas.forEach( data => {
 			<ul class="ui-set">
 				<li>
 					<label class="form-check-label">
-						<input class="form-type-select" type="radio" name="mode" value="1" checked>
+						<input class="form-type-select" type="radio" name="mode`+loop+`" value="1" checked>
 						<i class="fa-solid fa-pen"></i>
 						ペン
 					</label>
 				</li>
 				<li>
 					<label class="form-check-label">
-						<input class="form-type-select" type="radio" name="mode" value="2">
+						<input class="form-type-select" type="radio" name="mode`+loop+`" value="2">
 						<i class="fa-solid fa-eraser"></i>
 						消しゴム
 					</label>
