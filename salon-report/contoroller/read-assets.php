@@ -11,8 +11,8 @@ function sr_customer_enqueue( $hook_suffix ) {
 	wp_enqueue_style ( 'customer_form_field', plugins_url() . '/salon-report/assets/css/salon-report.css' );
 	wp_enqueue_style ( 'fontawesome', plugins_url() . '/salon-report/assets/js/handdraw/css/fontawesome.css' );
 	wp_enqueue_style ( 'hand-write-css', plugins_url() . '/salon-report/assets/js/handdraw/css/handdraw.css' );
-	wp_enqueue_script( 'check-color', plugins_url() . '/salon-report/assets/js/check-color.js', array(), '', true );
-	wp_enqueue_script( 'hand-write-html', plugins_url() . '/salon-report/assets/js/handdraw/js/html.js', array(), '', true );
+	wp_enqueue_script( 'check-color', plugins_url() . '/salon-report/assets/js/check-color.js', array(), '1.0.0', true );
+	wp_enqueue_script( 'hand-write-html', plugins_url() . '/salon-report/assets/js/handdraw/js/html.js', array(), '1.0.0', true );
 	wp_enqueue_script( 'hand-write', plugins_url() . '/salon-report/assets/js/handdraw/js/handdraw.js', array( 'hand-write-html' ), '1.0.0', true );
 	// wp_enqueue_script( 'postbox-toggle', plugins_url() . '/salon-report/assets/js/postbox-toggle.js', array(), '', true );
 }
