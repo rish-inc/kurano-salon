@@ -1,5 +1,6 @@
-const selectShop = document.getElementById( 'js-select-shop' );
-
+const selectShopSlectors = document.querySelectorAll( '.js-select-shop' );
 window.addEventListener( 'load', () => {
-	selectShop.selected = true;
+	selectShopSlectors.forEach ( selectShopSlector => {
+		selectShopSlector.selected = true;
+	} );
 } );

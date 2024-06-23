@@ -4,13 +4,13 @@
  * Loading shop terms
  */
 
-function get_shoplist_field( $post ) {
+function get_shoplist_field( $post, $loop_count ) {
 	$shop_terms = get_terms( 'shop' , array( 'hide_empty' => false ) );
 
-	$get_customer_shop = get_post_meta( $post -> ID, 'customer_visit_shop_' . SR_Config::PREFIX . 'report' . '0', true );
+	$get_customer_shop = get_post_meta( $post -> ID, 'customer_visit_shop_' . SR_Config::PREFIX . 'report' . $loop_count, true );
 	$customer_shop = $get_customer_shop ? $get_customer_shop : array();
 
-	echo '<select class="customer_form_field__item__selector" name="customer_visit_shop_' . SR_Config::PREFIX . 'report' . '0' . '">';
+	echo '<select class="customer_form_field__item__selector" name="customer_visit_shop_' . SR_Config::PREFIX . 'report' . $loop_count . '">';
 	echo '<option value="ショップ選択">ショップ選択</option>';
 	foreach( $shop_terms as $shop_term ) :
 		$shop_id   = $shop_term -> term_id;
@@ -20,7 +20,7 @@ function get_shoplist_field( $post ) {
 		} else {
 			$customer_shop_checked = "";
 		}
-		echo '<option id="js-select-shop" value="' . $shop_term -> name . '" ' . $customer_shop_checked . '>' . $shop_term -> name . '</option>';
+		echo '<option class="js-select-shop" value="' . $shop_term -> name . '" ' . $customer_shop_checked . '>' . $shop_term -> name . '</option>';
 	endforeach;
 	echo '</select>';
 }

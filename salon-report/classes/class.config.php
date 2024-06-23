@@ -13,4 +13,6 @@ class SR_Config {
 	 * The prefix of this plugin.
 	 */
 	const PREFIX = 'customer_data_';
+
+	const LOOP = 12;
 }

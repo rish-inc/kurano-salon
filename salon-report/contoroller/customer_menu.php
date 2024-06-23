@@ -3,7 +3,7 @@
  * Customer menu data contoller
  * Loading treatment-menu-label terms
  */
-function get_customer_menu_field( $post ) {
+function get_customer_menu_field( $post, $loop_count ) {
 	$menu_terms = get_terms( 'treatment' , array( 'hide_empty' => false ) );
 	$users = get_users(
 		array (
@@ -11,18 +11,19 @@ function get_customer_menu_field( $post ) {
 			'order' => 'ASC',
 		)
 	);
-	$attr_menu = SR_fieldname_to_attr::change_id_name( 'customer_menu' )[0];
+	$attr_menu = SR_fieldname_to_attr::change_id_name( 'customer_menu', $loop_count )[0];
 ?>
 <ul id="<?php echo $attr_menu['id']; ?>" class="customer_form_field__multibox">
 <?php foreach( $menu_terms as $menu_term ) :
 	$menu_id        = $menu_term -> term_id;
 	$menu_slug      = $menu_term -> slug;
-	$attr_staff     = SR_fieldname_to_attr::change_id_name( 'customer_staff' )[0];
-	$attr_designate = SR_fieldname_to_attr::change_id_name( 'designate' )[0];
+	$attr_staff     = SR_fieldname_to_attr::change_id_name( 'customer_staff', $loop_count )[0];
+	$attr_designate = SR_fieldname_to_attr::change_id_name( 'designate', $loop_count )[0];
 	?>
 	<li class="customer_form_field__multibox__item">
 		<label class="customer_form_field__multibox__item__title js-check-menu-title">
 			<?php
+				//メニュー項目名
 				$get_customer_menu = get_post_meta( $post -> ID, $attr_menu['name'], true );
 				$customer_menu = $get_customer_menu ? $get_customer_menu : array();
 				if( in_array( $menu_term -> name, $customer_menu ) ) {
@@ -31,7 +32,14 @@ function get_customer_menu_field( $post ) {
 					$customer_menu_checked = "";
 				}
 			?>
-			<?php echo( $menu_term -> name ); ?> <input class="js-check-menu" type="checkbox" name="<?php echo $attr_menu['name'] . '[' . $menu_slug . ']'; ?>" value="<?php echo( $menu_term -> name ); ?>" <?php echo $customer_menu_checked; ?>>
+			<?php echo( $menu_term -> name ); ?>
+			<input
+				class="js-check-menu"
+				type="checkbox"
+				name="<?php echo $attr_menu['name'] . '[' . $menu_slug . ']'; ?>"
+				value="<?php echo( $menu_term -> name ); ?>"
+				<?php echo $customer_menu_checked; ?>
+			>
 		</label>
 		<select class="customer_form_field__multibox__selector js-menu-staff" name="<?php echo $attr_staff['name']; ?>['<?php echo $menu_slug; ?>']">
 			<option value="担当者選択">担当者選択</option>
@@ -39,7 +47,7 @@ function get_customer_menu_field( $post ) {
 				$get_customer_staff = get_post_meta( $post -> ID, $attr_staff['name'], true );
 				$customer_staff = $get_customer_staff ? $get_customer_staff : array();
 				foreach( $users as $user ) :
-					if( $user -> display_name == $customer_staff["'$menu_slug'"] ) {
+					if( isset( $customer_staff["'$menu_slug'"] ) && ( $user -> display_name == $customer_staff["'$menu_slug'"] ) ) {
 						$customer_staff_checked = "selected";
 					} else {
 						$customer_staff_checked = "";
