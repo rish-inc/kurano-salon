@@ -1,3 +1,6 @@
+/*
+ * Hand draw logic
+ */
 datas.forEach( data => {
 	let   loop           = data.dataset.loop;
 	const imageCanvas    = document.getElementById( 'imageCanvas' + loop );
@@ -309,4 +312,23 @@ datas.forEach( data => {
 		img.src = BGIMG;
 		img.addEventListener( "load", () => ctxs.imageCtx.drawImage( img, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height ) );
 	}
+
 } );
+let togglePostbox = () => {
+	const postboxes = document.querySelectorAll( '.postbox' );
+	// console.log( postboxes );
+	postboxes.forEach( ( postbox, index ) => {
+		// timedata = postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value;
+		console.log( timedata );
+		if ( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value !== null && postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value !== '' ) {
+			// postbox.querySelector( '.handlediv' ).ariaExpanded = 'true';
+			console.log( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value );
+		}
+		// if ( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value != '' ) {
+		// 	postbox.querySelector( '.handlediv' ).ariaExpanded = 'true';
+		// } else {
+		// 	postbox.querySelector( '.handlediv' ).ariaExpanded = 'false';
+		// }
+	} );
+}
+togglePostbox();
