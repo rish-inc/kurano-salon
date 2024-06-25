@@ -26,7 +26,7 @@ function sr_insert_customer_fields ( $post, $args ) {
 		<div class="customer_form_field__item">
 			<label for="customer_treatment_datail">施術メモ</label>
 			<div id="<?php echo $handdraw['name'] ?>" class="hand-draw"></div>
-			<input type="hidden" data-loop="<?php echo $loop_count; ?>" id="<?php echo $handdraw_hidden['id'] ?>" name="<?php echo $handdraw_hidden['name'] ?>" class="js-handdraw-data" value="<?php echo get_post_meta( $post->ID, $handdraw_hidden['name'], true ); ?>">
+			<input type="hidden" id="<?php echo $handdraw_hidden['id'] ?>" name="<?php echo $handdraw_hidden['name'] ?>" class="js-handdraw-data" value="<?php echo get_post_meta( $post->ID, $handdraw_hidden['name'], true ); ?>">
 		</div>
 		<div class="customer_form_field__item">
 			<?php echo SR_input::input_field( 'number', 'customer_peyment', 'お支払い金額', $loop_count ); ?>

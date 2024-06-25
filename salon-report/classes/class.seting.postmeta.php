@@ -17,7 +17,7 @@ class SR_input {
 		$value = get_post_meta( $post -> ID, $attr['name'], true );
 		$class = $classes ? implode( " ", $classes ) : $classes;
 		printf( '<label class="customer_form_field__item__label %s" for="%s">%s</label>', $class, $attr['id'], $title );
-		echo "\n";;
+		echo "\n";
 		printf( '<input type="%s" name="%s" id="%s" value="%s">', $type, $attr['name'], $attr['id'], $value );
 	}
 }

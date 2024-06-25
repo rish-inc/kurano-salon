@@ -1,37 +1,35 @@
 /*
  * Hand draw logic
  */
-datas.forEach( data => {
-	let   loop           = data.dataset.loop;
-	const imageCanvas    = document.getElementById( 'imageCanvas' + loop );
-	const drawCanvas     = document.getElementById( 'drawCanvas' + loop );
-	const tempCanvas     = document.getElementById( 'tempCanvas' + loop );
-	const pointerCanvas  = document.getElementById( 'pointerCanvas' + loop );
-	const BGIMG          = path + '/salon-report/assets/js/handdraw/img/human.webp';
-	let mode  = 1; //1:pen 2:eraser
-	let offsetX, offsetY;
-	let imageData;
+const BGIMG          = path + '/salon-report/assets/js/handdraw/img/human.webp';
+let mode  = 1; //1:pen 2:eraser
+const canvas = {
+	width: 500,
+	height: 350
+}
+const colorFalse = "#333";
+let imageData;
+const undoMax   = 10;
+const undoData  = [];
+const redoData  = [];
+let offsetX, offsetY;
 
-	const canvas = {
-		width: 500,
-		height: 350
-	}
-
-	const colorFalse = "#333";
-	const undoMax   = 10;
-	const undoData  = [];
-	const redoData  = [];
-	const undoMark  = document.getElementById( 'undoMark' + loop );
-	const redoMark  = document.getElementById( 'redoMark' + loop );
-	const clearMark = document.getElementById( 'clearMark' + loop );
-	const brushSizeRange = document.getElementById( 'brush-size-range' + loop );
-	const clearButton = document.getElementById( 'clear' + loop );
-	const clearModal  = document.getElementById( 'clear-modal' + loop );
-	const clearCancelButton = document.getElementById( 'clearCancel' + loop );
-	const clearConfirmButton = document.getElementById( 'clearConfirm' + loop );
-	const clearModalForm  = document.getElementById( 'clear-modal-form' + loop );
-	const undoButton  = document.getElementById( 'undo' + loop );
-	const redoButton  = document.getElementById( 'redo' + loop );
+datas.forEach( ( data, index ) => {
+	const imageCanvas    = document.getElementById( 'imageCanvas' + index );
+	const drawCanvas     = document.getElementById( 'drawCanvas' + index );
+	const tempCanvas     = document.getElementById( 'tempCanvas' + index );
+	const pointerCanvas  = document.getElementById( 'pointerCanvas' + index );
+	const undoMark  = document.getElementById( 'undoMark' + index );
+	const redoMark  = document.getElementById( 'redoMark' + index );
+	const clearMark = document.getElementById( 'clearMark' + index );
+	const brushSizeRange = document.getElementById( 'brush-size-range' + index );
+	const clearButton = document.getElementById( 'clear' + index );
+	const clearModal  = document.getElementById( 'clear-modal' + index );
+	const clearCancelButton = document.getElementById( 'clearCancel' + index );
+	const clearConfirmButton = document.getElementById( 'clearConfirm' + index );
+	const clearModalForm  = document.getElementById( 'clear-modal-form' + index );
+	const undoButton  = document.getElementById( 'undo' + index );
+	const redoButton  = document.getElementById( 'redo' + index );
 	clearButton.disabled = true;
 	undoButton.disabled = true;
 	redoButton.disabled = true;
@@ -52,7 +50,7 @@ datas.forEach( data => {
 	}
 
 	let brushSizeChange = ( num ) => {
-		document.getElementById( 'brush-size' + loop ).innerHTML = num;
+		document.getElementById( 'brush-size' + index ).innerHTML = num;
 		option.brushSize = num;
 	}
 
@@ -89,12 +87,12 @@ datas.forEach( data => {
 				if ( option.holdClick ) mouseUp( e );
 			} );
 			zoom();
-			updateButton.addEventListener( 'click', ( e ) => saveImg( e ) );
 			buttonStatusToggle();
+			updateButton.addEventListener( 'click', ( e ) => saveImg( e ) );
 		} );
 		window.addEventListener( 'resize', zoom() );
 		window.addEventListener( 'change', () => {
-			mode = Number( document.querySelector( 'input[name="mode' + loop + '"]:checked' ).value );
+			mode = Number( document.querySelector( 'input[name="mode' + index + '"]:checked' ).value );
 		} );
 		brushSizeRange.addEventListener( 'change', ( e ) =>  {
 			brushSizeChange( e.target.value );
@@ -102,7 +100,6 @@ datas.forEach( data => {
 		undoButton.addEventListener(  'click', () => undo() );
 		redoButton.addEventListener(  'click', () => redo() );
 		clearButton.addEventListener( 'click', () => clear() );
-		// downloadButton.addEventListener( 'click', ( e ) => download( e ) );
 	}
 
 	let mouseDown = ( e ) => {
@@ -260,6 +257,7 @@ datas.forEach( data => {
 		imageData = ctxs.drawCtx.getImageData( 0, 0, drawCanvas.width, drawCanvas.height );
 		const data = imageData.data;
 		const dataReduce = data.reduce( function ( prev, current, i, arr ) { return prev + current } );
+
 		if( dataReduce || data ) {
 			clearButton.disabled = false;
 			clearMark.style.color = colorFalse;
@@ -284,6 +282,7 @@ datas.forEach( data => {
 		ctxs.pointerCtx.clearRect( 0, 0, pointerCanvas.width, pointerCanvas.height );
 		buttonStatusToggle();
 		clearModal.close();
+
 	}
 
 	let saveImg = ( e ) => {
@@ -312,23 +311,20 @@ datas.forEach( data => {
 		img.src = BGIMG;
 		img.addEventListener( "load", () => ctxs.imageCtx.drawImage( img, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height ) );
 	}
-
 } );
+
 let togglePostbox = () => {
 	const postboxes = document.querySelectorAll( '.postbox' );
-	// console.log( postboxes );
 	postboxes.forEach( ( postbox, index ) => {
-		// timedata = postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value;
-		console.log( timedata );
-		if ( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value !== null && postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value !== '' ) {
-			// postbox.querySelector( '.handlediv' ).ariaExpanded = 'true';
-			console.log( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value );
+		// console.log( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ) );
+		// if ( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).hasAttribute( 'value' ) ) {
+		if ( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value != null ) {
+			postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' );
+	// 		postbox.querySelector( '.handlediv' ).ariaExpanded = 'true';
+	// 	} else {
+	// 		document.querySelector( '#customer_data' + index ).classList.add( 'closed' );
+	// 		postbox.querySelector( '.handlediv' ).ariaExpanded = 'false';
 		}
-		// if ( postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' ).value != '' ) {
-		// 	postbox.querySelector( '.handlediv' ).ariaExpanded = 'true';
-		// } else {
-		// 	postbox.querySelector( '.handlediv' ).ariaExpanded = 'false';
-		// }
 	} );
 }
 togglePostbox();
