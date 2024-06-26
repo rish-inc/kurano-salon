@@ -15,9 +15,18 @@ class SR_input {
 		global $post;
 		$attr = SR_fieldname_to_attr::change_id_name( $name, $loop_count )[0];
 		$value = get_post_meta( $post -> ID, $attr['name'], true );
+		// if ( get_post_meta( $post -> ID, $attr['name'], true ) ) {
+		// 	$value = get_post_meta( $post -> ID, $attr['name'], true );
+		// } else {
+		// 	$value = '';
+		// }
 		$class = $classes ? implode( " ", $classes ) : $classes;
 		printf( '<label class="customer_form_field__item__label %s" for="%s">%s</label>', $class, $attr['id'], $title );
 		echo "\n";
-		printf( '<input type="%s" name="%s" id="%s" value="%s">', $type, $attr['name'], $attr['id'], $value );
+		if ( $value ) {
+			printf( '<input type="%s" name="%s" id="%s" value="%s">', $type, $attr['name'], $attr['id'], $value );
+		} else {
+			printf( '<input type="%s" name="%s" id="%s">', $type, $attr['name'], $attr['id'] );
+		}
 	}
 }
