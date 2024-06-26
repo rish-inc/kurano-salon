@@ -13,11 +13,13 @@ function sr_insert_customer_fields ( $post, $args ) {
 ?>
 	<div class="customer_form_field">
 		<div class="customer_form_field__item">
-			<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', $loop_count, ['js-datetime'] ); ?>
+			<?php echo SR_input::input_field( 'datetime-local', 'customer_visit_datetime', '来店日時', $loop_count, 'true', ['js-datetime'] ); ?>
 		</div>
 		<div class="customer_form_field__item">
 			<label class="customer_form_field__item__label" for="customer_visit_shop">来店ショップ</label>
-			<?php get_shoplist_field( $post, $loop_count ); ?>
+			<div class="cf-input-field">
+				<?php get_shoplist_field( $post, $loop_count ); ?>
+			</div>
 		</div>
 		<div class="customer_form_field__item">
 			<p class="customer_form_field__item__label">施術メニュー</p>
