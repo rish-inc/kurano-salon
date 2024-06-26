@@ -30,20 +30,30 @@ window.addEventListener( 'load', function ( e ) {
 
 	let togglePostbox = () => {
 		/*
-		* If datatime data exists, show postbox.
-		* If not, hide postbox.
+		* Postbox is open if timedata is set or menu label checked data.
+		* Other than that hidden it.
 		*/
 		const postboxes = document.querySelectorAll( '.postbox' );
 		postboxes.forEach( ( postbox, index ) => {
 			if ( document.querySelector( '#customer_data' + index ) ) {
+				//Postbox is open if timedata is set or menu label checked data.
 				let getTime = postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' );
 				let postbox_header_title = postbox.children[0].children[0].textContent;
+				let menu_labels = postbox.querySelectorAll( '.customer_form_field__multibox__item' );
+				//Time data check
 				if ( getTime?.value ) {
 					postbox.children[0].children[0].textContent = postbox_header_title + " " + getTime.value;
 					document.querySelector( '#customer_data' + index ).classList.remove( 'closed' );
 				} else {
 					document.querySelector( '#customer_data' + index ).classList.add( 'closed' );
 				}
+				//Menu label check
+				menu_labels.forEach( menu_label => {
+					if ( menu_label.children[0].classList.contains( 'is-open' ) ) {
+						document.querySelector( '#customer_data' + index ).classList.remove( 'closed' );
+						console.log( index );
+					}
+				} );
 			}
 		} );
 	}
