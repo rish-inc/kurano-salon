@@ -33,6 +33,7 @@ class Salon_Report {
 		require_once plugin_dir_path( __FILE__ ) . 'contoroller/gender.php';
 		require_once plugin_dir_path( __FILE__ ) . 'contoroller/shoplist.php';
 		require_once plugin_dir_path( __FILE__ ) . 'contoroller/customer_menu.php';
+		require_once plugin_dir_path( __FILE__ ) . 'contoroller/validation.php';
 
 		require_once plugin_dir_path( __FILE__ ) . 'view/main-insert-customer-fields.php';
 		require_once plugin_dir_path( __FILE__ ) . 'view/personal-insert-customer-fields.php';
