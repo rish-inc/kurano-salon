@@ -1,5 +1,19 @@
+let dates = [];
+for ( let index = 0; index < datas.length; index++ ) {
+	document.querySelectorAll( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' )
+	.forEach( ( date, index ) => {
+		date.addEventListener( 'change', function ( e ) {
+			console.log( "aaa" );
+			validation();
+		} );
+	} );
+}
+
+
+
 window.addEventListener( 'load', function ( e ) {
 	validation();
+	state();
 } );
 
 let validation = () => {
@@ -17,6 +31,14 @@ let validation = () => {
 }
 
 let state = () => {
+
+	for ( let index = 0; index < datas.length; index++ ) {
+		let postbox = document.querySelector( '#customer_data' + index );
+		if ( ! postbox.classList.contains( 'closed' ) ) {
+			postbox.classList.add( 'open' );
+		}
+	}
+	console.log( "aaa" );
 }
 
 let dataCheck = () => {
