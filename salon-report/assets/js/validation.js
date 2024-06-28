@@ -1,57 +1,49 @@
 window.addEventListener( 'load', function ( e ) {
 	const updateButton = document.querySelector( '.editor-post-publish-button__button' );
 	updateButton.addEventListener( 'click', function ( e ) {
-		e.preventDefault();
-		datas.forEach( ( data, index ) => {
+		const error_statuses = [];
+		const error_flg = [];
+		for ( let index = 0; index < datas.length; index++ ) {
 			let postbox = document.querySelector( '#customer_data' + index );
-			let error_message_date = postbox.children[1].children[2].children[0].children[1].children[1];
-			let error_message_menus = postbox.children[1].children[2].children[2].children[1].children;
+			let field_items = postbox.querySelectorAll( '.customer_form_field__multibox__item' );
+			let error_date = postbox.querySelector( '.is-date' );
+			let error_menus = postbox.querySelectorAll( '.is-staff' );
 			let selectorStaffs = postbox.querySelectorAll( '.js-menu-staff' );
-			let error_flog = true;
 			if ( ! postbox.classList.contains( 'closed' ) ) {
-				error_flog = validateTime ( postbox, error_message_date, index );
-				error_flog = validateStaff( postbox, error_message_menus, index );
+				error_statuses.push( validateTime ( postbox, error_date, index ) );
+				for ( let item_count = 0; item_count < field_items.length; item_count++ ) {
+					error_statuses.push( validateStaff( postbox, error_menus, index, field_items,  item_count ) );
+				}
 			}
-		} );
-		return false;
+		};
+		if ( error_statuses.includes( 'error' ) ) {
+			return false;
+		}
 	} );
 } );
 
-let validateTime = ( postbox, error_message, index ) => {
+let validateTime = ( postbox, error_date, index ) => {
 	let getTime = postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' );
 	if ( ! getTime?.value ) {
-		error_message.style.display = 'block';
-		// e.preventDefault();
-		return false;
+		error_date.style.display = 'block';
+		return 'error';
 	} else {
-		error_message.style.display = 'none';
-		return true;
+		error_date.style.display = 'none';
+		return 'success';
 	}
 }
 
-let validateStaff = ( postbox, error_message_datas, index ) => {
-	let selectorStaffs = postbox.querySelectorAll( '.js-menu-staff' );
-	selectorStaffs.forEach( selectorStaff => {
-		let menuLabel = selectorStaff.parentElement.parentElement.children[0];
-		if ( menuLabel.classList.contains( 'is-open' ) ) {
-			let menuList = menuLabel.parentElement.children[1].children[0];
-			let menuListChildren = menuList.children;
-			let error_message = menuList.parentElement.children[2];
-			let flg = [];
-			Array.prototype.forEach.call( menuListChildren, ( menuListChild, index ) => {
-				if ( menuListChild.selected == true ) {
-					flg[index] = true;
-				} else {
-					flg[index] = false;
-				}
-			} );
-			if ( flg[0] ) {
-				error_message.style.display = 'block';
-				return false;
-			} else {
-				error_message.style.display = 'none';
-				return true;
-			}
+let validateStaff = ( postbox, error_menus, index, field_items, item_count ) => {
+	let item = postbox.querySelectorAll( '.customer_form_field__multibox__item' );
+	let labels = field_items[ item_count ].querySelector( '.js-check-menu-title' );
+	let selectors = field_items[ item_count ].querySelector( '.js-menu-staff' );
+	for ( let i = 0; i < selectors.length; i++ ) {
+		if ( labels.classList.contains( 'is-open' ) && selectors[i].selected ) {
+			error_menus[item_count].style.display = 'block';
+			return 'error';
+		} else {
+			error_menus[item_count].style.display = 'none';
+			return 'success';
 		}
-	} );
+	}
 }

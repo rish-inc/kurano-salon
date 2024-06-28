@@ -72,7 +72,7 @@ function get_customer_menu_field( $post, $loop_count ) {
 					<label>指名 <input class="js-check-designate" type="checkbox" name="<?php echo $attr_designate['name']; ?>['<?php echo $menu_slug; ?>']" <?php echo $designate_check; ?>></label>
 				</span>
 			</div>
-			<p class="is-error">担当者を選択してください</p>
+			<p class="is-staff is-error">担当者を選択してください</p>
 		</div>
 	</li>
 <?php endforeach; ?>

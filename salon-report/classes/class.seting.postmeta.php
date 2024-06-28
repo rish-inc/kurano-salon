@@ -24,10 +24,10 @@ class SR_input {
 		$class = $classes ? implode( " ", $classes ) : $classes;
 		switch( $type ) {
 			case 'datetime-local':
-				$validation = '<p class="is-error">日付を選択してください</p>';
+				$validation = '<p class="is-date is-error">日付を選択してください</p>';
 				break;
 			case 'number':
-				$validation = '<p class="is-error">数字を入力してください</p>';
+				$validation = '<p class="is-number is-error">数字を入力してください</p>';
 				break;
 			default:
 				$validation = '';
