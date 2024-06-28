@@ -15,7 +15,8 @@ function sr_customer_validation_ajax () {
 	if ( is_admin() && $post -> post_type == 'customer_report' ) : ?>
 		<script language="javascript" type="text/javascript">
 			( function( $ ) {
-				$( '#publish' ).click( function() {
+				$( '.editor-post-publish-button__button' ).click( function() {
+					alert( "aaa" );
 					if( $( this ).data( "valid" ) ) {
 						return true;
 					}

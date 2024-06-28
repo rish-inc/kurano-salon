@@ -1,26 +1,43 @@
 window.addEventListener( 'load', function ( e ) {
-	const updateButton = document.querySelector( '.editor-post-publish-button__button' );
-	updateButton.addEventListener( 'click', function ( e ) {
-		const error_statuses = [];
-		const error_flg = [];
-		for ( let index = 0; index < datas.length; index++ ) {
-			let postbox = document.querySelector( '#customer_data' + index );
-			let field_items = postbox.querySelectorAll( '.customer_form_field__multibox__item' );
-			let error_date = postbox.querySelector( '.is-date' );
-			let error_menus = postbox.querySelectorAll( '.is-staff' );
-			let selectorStaffs = postbox.querySelectorAll( '.js-menu-staff' );
-			if ( ! postbox.classList.contains( 'closed' ) ) {
-				error_statuses.push( validateTime ( postbox, error_date, index ) );
-				for ( let item_count = 0; item_count < field_items.length; item_count++ ) {
-					error_statuses.push( validateStaff( postbox, error_menus, index, field_items,  item_count ) );
-				}
-			}
-		};
-		if ( error_statuses.includes( 'error' ) ) {
-			return false;
-		}
-	} );
+	validation();
 } );
+
+let validation = () => {
+	const updateButton = document.querySelector( '.editor-post-publish-button__button' );
+	error_flg = dataCheck();
+	if ( error_flg.includes( 'error' ) ) {
+		updateButton.ariaDisabled = "true";
+		updateButton.addEventListener( 'click', function ( e ) {
+			e.preventDefault();
+			e.stopPropagation();
+		} );
+	} else {
+		updateButton.ariaDisabled = "false";
+	}
+}
+
+let state = () => {
+}
+
+let dataCheck = () => {
+	const error_flg = [];
+	const toglle_chk = [];
+	for ( let index = 0; index < datas.length; index++ ) {
+		let postbox = document.querySelector( '#customer_data' + index );
+		let field_items = postbox.querySelectorAll( '.customer_form_field__multibox__item' );
+		let error_date = postbox.querySelector( '.is-date' );
+		let error_menus = postbox.querySelectorAll( '.is-staff' );
+		let selectorStaffs = postbox.querySelectorAll( '.js-menu-staff' );
+		if ( ! postbox.classList.contains( 'closed' ) ) {
+			toglle_chk.push( 'open' + index );
+			error_flg.push( validateTime ( postbox, error_date, index ) );
+			for ( let item_count = 0; item_count < field_items.length; item_count++ ) {
+				error_flg.push( validateStaff( postbox, error_menus, field_items,  item_count ) );
+			}
+		}
+	}
+	return error_flg;
+}
 
 let validateTime = ( postbox, error_date, index ) => {
 	let getTime = postbox.querySelector( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' );
@@ -33,8 +50,7 @@ let validateTime = ( postbox, error_date, index ) => {
 	}
 }
 
-let validateStaff = ( postbox, error_menus, index, field_items, item_count ) => {
-	let item = postbox.querySelectorAll( '.customer_form_field__multibox__item' );
+let validateStaff = ( postbox, error_menus, field_items, item_count ) => {
 	let labels = field_items[ item_count ].querySelector( '.js-check-menu-title' );
 	let selectors = field_items[ item_count ].querySelector( '.js-menu-staff' );
 	for ( let i = 0; i < selectors.length; i++ ) {
