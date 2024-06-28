@@ -1,16 +1,19 @@
 window.addEventListener( 'load', function ( e ) {
 	const updateButton = document.querySelector( '.editor-post-publish-button__button' );
 	updateButton.addEventListener( 'click', function ( e ) {
+		e.preventDefault();
 		datas.forEach( ( data, index ) => {
 			let postbox = document.querySelector( '#customer_data' + index );
 			let error_message_date = postbox.children[1].children[2].children[0].children[1].children[1];
 			let error_message_menus = postbox.children[1].children[2].children[2].children[1].children;
 			let selectorStaffs = postbox.querySelectorAll( '.js-menu-staff' );
+			let error_flog = true;
 			if ( ! postbox.classList.contains( 'closed' ) ) {
-				validateTime( postbox, error_message_date, index );
-				validateStaff( postbox, error_message_menus, index );
+				error_flog = validateTime ( postbox, error_message_date, index );
+				error_flog = validateStaff( postbox, error_message_menus, index );
 			}
 		} );
+		return false;
 	} );
 } );
 

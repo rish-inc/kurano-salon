@@ -51,7 +51,6 @@ window.addEventListener( 'load', function ( e ) {
 				menu_labels.forEach( menu_label => {
 					if ( menu_label.children[0].classList.contains( 'is-open' ) ) {
 						document.querySelector( '#customer_data' + index ).classList.remove( 'closed' );
-						console.log( index );
 					}
 				} );
 			}

@@ -14,31 +14,31 @@ function sr_customer_validation_ajax () {
 	global $post;
 	if ( is_admin() && $post -> post_type == 'customer_report' ) : ?>
 		<script language="javascript" type="text/javascript">
-			jQuery( document ).ready( function() {
-				jQuery( '#publish' ).click( function() {
-					if( jQuery( this ).data( "valid" ) ) {
+			( function( $ ) {
+				$( '#publish' ).click( function() {
+					if( $( this ).data( "valid" ) ) {
 						return true;
 					}
-					var form_data = jQuery( '#post' ).serializeArray();
-					var data = {
+					let form_data = $( '#post' ).serializeArray();
+					let data = {
 						action: 'sr_customer_validation',
 						security: '<?php echo wp_create_nonce( 'pre_publish_validation' ); ?>',
-						form_data: jQuery.param( form_data ),
+						form_data: $.param( form_data ),
 					};
-					jQuery.post( ajaxurl, data, function( response ) {
+					$.post( ajaxurl, data, function( response ) {
 						if ( response.indexOf( 'true' ) > -1 || response == true ) {
-							jQuery( '#publish' ).data( "valid", true ).trigger( 'click' );
+							$( '#publish' ).data( "valid", true ).trigger( 'click' );
 						} else {
 							alert( "Error: " + response );
-							jQuery( "#publish" ).data( "valid", false );
+							$( "#publish" ).data( "valid", false );
 						}
-						jQuery( '#ajax-loading' ).hide();
-						jQuery( '#publish' ).removeClass( 'button-primary-disabled' );
-						jQuery( '#save-post' ).removeClass( 'button-disabled' );
-					});
+						$( '#ajax-loading' ).hide();
+						$( '#publish' ).removeClass( 'button-primary-disabled' );
+						$( '#save-post' ).removeClass( 'button-disabled' );
+					} );
 					return false;
 				} );
-			} );
+			} )(jQuery);
 		</script>
 	<?php endif;
 }
