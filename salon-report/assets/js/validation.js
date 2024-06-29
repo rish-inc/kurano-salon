@@ -7,31 +7,32 @@ for ( let index = 0; index < datas.length; index++ ) {
 			validation();
 		} );
 	} );
-	document.querySelectorAll( '.js-check-menu-title' )
-	.forEach( ( item, index ) => {
-		item.addEventListener( 'click', function( e ) {
-			if ( ! this.classList.contains( 'is-open' ) ) {
-				console.log( this );
-				// validation();
-			}
-		} );
-	} );
-	// document.querySelectorAll( '.customer_form_field__multibox__item' )
-	// .forEach( ( item, index ) => {
-	// 	item.querySelector( '.js-check-menu-title' ).addEventListener( 'click', function( e ) {
-	// 		if ( this.classList.contains( 'is-open' ) ) {
-	// 			console.log( this );
-	// 			validation();
-	// 		}
-	// 	} );
-	// } );
 }
+let menus = document.querySelectorAll( '.customer_form_field__multibox' );
+for( let i = 0; i < menus.length; i++ ) {
+	for ( let j = 0; j < menus[i].children.length; j++ ) {
+		menus[i].children[j].addEventListener( 'change', function ( e ) {
+			validation();
+		} );
+	}
+}
+// document.querySelectorAll( '.customer_form_field__multibox' )
+// .forEach( ( item, index ) => {
+// 	item.querySelector( '.js-check-menu-title' ).addEventListener( 'click', function( e ) {
+// 		validation();
+// 		// if ( this.classList.contains( 'is-open' ) ) {
+// 		// 	console.log( this );
+// 		// 	this.addEventListener( 'checnge', function( e ) {
+// 		// 	} );
+// 		// }
+// 	})
+// } );
 
 
 
 window.addEventListener( 'load', function ( e ) {
 	validation();
-	state();
+	// state();
 } );
 
 let validation = () => {
