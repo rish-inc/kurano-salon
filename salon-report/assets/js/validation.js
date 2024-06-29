@@ -16,23 +16,9 @@ for( let i = 0; i < menus.length; i++ ) {
 		} );
 	}
 }
-// document.querySelectorAll( '.customer_form_field__multibox' )
-// .forEach( ( item, index ) => {
-// 	item.querySelector( '.js-check-menu-title' ).addEventListener( 'click', function( e ) {
-// 		validation();
-// 		// if ( this.classList.contains( 'is-open' ) ) {
-// 		// 	console.log( this );
-// 		// 	this.addEventListener( 'checnge', function( e ) {
-// 		// 	} );
-// 		// }
-// 	})
-// } );
-
-
 
 window.addEventListener( 'load', function ( e ) {
 	validation();
-	// state();
 } );
 
 let validation = () => {
@@ -41,11 +27,16 @@ let validation = () => {
 	if ( error_flg.includes( 'error' ) ) {
 		updateButton.ariaDisabled = "true";
 		updateButton.addEventListener( 'click', function ( e ) {
-			e.preventDefault();
+			// e.preventDefault();
 			e.stopPropagation();
 		} );
 	} else {
 		updateButton.ariaDisabled = "false";
+		updateButton.addEventListener( 'click', function ( e ) {
+			// e.preventDefault();
+			// e.stopPropagation();
+			e.off();
+		}, true );
 	}
 }
 
