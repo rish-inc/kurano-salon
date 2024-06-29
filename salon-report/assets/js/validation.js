@@ -1,12 +1,30 @@
 let dates = [];
 for ( let index = 0; index < datas.length; index++ ) {
+	//change date check
 	document.querySelectorAll( 'input[name="customer_visit_datetime_customer_data_report' + index + '"]' )
 	.forEach( ( date, index ) => {
 		date.addEventListener( 'change', function ( e ) {
-			console.log( "aaa" );
 			validation();
 		} );
 	} );
+	document.querySelectorAll( '.js-check-menu-title' )
+	.forEach( ( item, index ) => {
+		item.addEventListener( 'click', function( e ) {
+			if ( ! this.classList.contains( 'is-open' ) ) {
+				console.log( this );
+				// validation();
+			}
+		} );
+	} );
+	// document.querySelectorAll( '.customer_form_field__multibox__item' )
+	// .forEach( ( item, index ) => {
+	// 	item.querySelector( '.js-check-menu-title' ).addEventListener( 'click', function( e ) {
+	// 		if ( this.classList.contains( 'is-open' ) ) {
+	// 			console.log( this );
+	// 			validation();
+	// 		}
+	// 	} );
+	// } );
 }
 
 
@@ -38,7 +56,6 @@ let state = () => {
 			postbox.classList.add( 'open' );
 		}
 	}
-	console.log( "aaa" );
 }
 
 let dataCheck = () => {
