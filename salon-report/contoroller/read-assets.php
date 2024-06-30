@@ -8,6 +8,7 @@ function sr_customer_enqueue( $hook_suffix ) {
 ?>
 	<script>
 		const path ="<?php echo plugins_url(); ?>";
+		const hook_suffix = "<?php echo $hook_suffix ?>";
 	</script>
 
 <?php

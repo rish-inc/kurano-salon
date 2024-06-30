@@ -1,0 +1,19 @@
+@use 'global' as g;
+
+.js-dummy-button {
+	height: 36px;
+	background: #007CBA;
+	border-radius: 2px;
+	color: #7AB0D7;
+	cursor: default;
+	text-decoration: none;
+	text-shadow: none;
+	white-space: nowrap;
+	box-sizing: inherit;
+	border: 0;
+	font-size: 13px;
+	font-weight: 400;
+	margin: 0;
+	padding: 8px 12px;
+	background-color: #f00;
+}

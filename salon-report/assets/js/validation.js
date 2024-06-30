@@ -18,25 +18,33 @@ for( let i = 0; i < menus.length; i++ ) {
 }
 
 window.addEventListener( 'load', function ( e ) {
+	changeButton();
 	validation();
 } );
 
+let changeButton = () => {
+	const updateButton = document.querySelector( '.editor-post-publish-button__button' );
+	let updateButtonParent = document.querySelector( '.edit-post-header__settings' );
+	let dummyButton = document.createElement('div');
+	dummyButton.classList.add( 'js-dummy-button' );
+	if ( hook_suffix == 'post-new.php' ) {
+		dummyButton.textContent = "公開";
+	} else {
+		dummyButton.textContent = "更新";
+	}
+	updateButtonParent.insertBefore( dummyButton, updateButton );
+}
+
 let validation = () => {
 	const updateButton = document.querySelector( '.editor-post-publish-button__button' );
+	const dummyButton  = document.querySelector( '.js-dummy-button' );
 	error_flg = dataCheck();
 	if ( error_flg.includes( 'error' ) ) {
-		updateButton.ariaDisabled = "true";
-		updateButton.addEventListener( 'click', function ( e ) {
-			// e.preventDefault();
-			e.stopPropagation();
-		} );
+		dummyButton.style.display = "block";
+		updateButton.style.display = "none";
 	} else {
-		updateButton.ariaDisabled = "false";
-		updateButton.addEventListener( 'click', function ( e ) {
-			// e.preventDefault();
-			// e.stopPropagation();
-			e.off();
-		}, true );
+		dummyButton.style.display = "none";
+		updateButton.style.display = "block";
 	}
 }
 
